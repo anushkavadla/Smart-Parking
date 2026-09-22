@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>SmartPark</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#e9edff", "outline-variant": "#c1c6d7", "secondary-fixed-dim": "#ffb68d", "inverse-on-surface": "#edf0ff", "on-surface-variant": "#414755", "surface-container-highest": "#d9e2fc", "on-secondary": "#ffffff", "on-tertiary-fixed": "#001c3a", "surface-container-lowest": "#ffffff", "tertiary": "#375d90", "tertiary-fixed-dim": "#a5c8ff", "on-error-container": "#93000a", "inverse-primary": "#afc6ff", "primary-fixed": "#d9e2ff", "secondary-container": "#fe893c", "surface-container-low": "#f1f3ff", "on-secondary-fixed-variant": "#763300", "on-primary-container": "#fefcff", "on-secondary-fixed": "#321200", "surface-dim": "#d1daf4", "primary-container": "#006ef2", "surface-bright": "#f9f9ff", "on-error": "#ffffff", "on-primary-fixed": "#001a43", "primary-fixed-dim": "#afc6ff", "secondary-fixed": "#ffdbc9", "on-primary-fixed-variant": "#004398", "error-container": "#ffdad6", "outline": "#727786", "tertiary-container": "#5176aa", "tertiary-fixed": "#d4e3ff", "surface-variant": "#d9e2fc", "on-background": "#121b2e", "on-surface": "#121b2e", "secondary": "#9a4600", "primary": "#0057c2", "on-tertiary-container": "#fefcff", "on-primary": "#ffffff", "surface": "#f9f9ff", "surface-tint": "#0059c7", "on-secondary-container": "#672c00", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#1e4879", "background": "#f9f9ff", "surface-container-high": "#e1e8ff", "inverse-surface": "#273044" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-sm": "0.5rem", "margin": "2rem", "gutter-sm": "0.75rem", "space-xs": "0.25rem", "space-xl": "2.5rem", "space-md": "1rem", "gutter": "1.5rem", "margin-sm": "1rem" }, "fontFamily": { "label-sm": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Manrope"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "body-lg": ["Manrope"], "label-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-md": ["Manrope"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "800" }], "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }], "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 pt-space-sm px-gutter"><div class="h-20 max-w-7xl mx-auto px-gutter bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-[0_4px_20px_-2px_rgba(18,27,46,0.06),0_1px_3px_0px_rgba(18,27,46,0.03)] flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="SmartPark Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WjDs9BLtk4bQsvRR3xAvHrXeAaoGux1xCnFdrEGMsSvibOKs9cFdQftcpJJijC4qOYrf9BQhWWkfrgL1fba8_CZroq70fUPwb93iWaabm-lPFiDPRKCd2bhPJiUJRGUzE2pbNpFTLrNWdU-2XYetNlmFYtm-hTDQye0vZHexQjgi42mjNGcVNvpGWx4ijPnPs0MOwmy8zCmMg2onZRFVCiSsgAUGrmhKnyBuABqZ_ecKhOX9RCzBAOOhs"/><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface">SmartPark</span></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-xl" data-active-classes="bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm"><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="my-vehicles" href="#">My Vehicles</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="parking" href="#">Parking</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="active-parking" href="#">Active Parking</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="history" href="#">History</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-low rounded-full"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span class="font-label-md text-label-md text-on-surface-variant tracking-wide">10:42 AM</span></div><div class="flex items-center gap-space-sm pl-space-sm py-space-xs pr-space-md bg-surface-container-low rounded-full"><img alt="Arjun K." class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1XIV7mn_Fuhp6qUROahTuKC6hBxcAH5YYF5b6JAGlNYDH6t9ok-Om4YGvBD3ogQmp-aYEje6HpfHiQFau6zu7OvEtWXUFfPoGr2DVU6WgqDL4tpKqXiwC8y_BBRJVpLjfTG2D-T1h8UWZ5XPGcfK5rJhKfIfwU7FY3XRWFLEJ5Uvai-iOYcxd9dhm9UNXYGGULLnmazIegi_SlJ_6kEBWkpf2GXaBZkBdVDFG-vAZ-RJiAKQfaBOMq_D5c"/><span class="font-label-md text-label-md text-on-surface">Arjun K.</span></div></div></div></header><main class="w-full pt-20 max-w-7xl mx-auto px-gutter"><div class="flex flex-col w-full"><!-- Top Greeting & Clean Status Header -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg mb-space-lg pt-space-sm">
+<div class="space-y-space-xs">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+      Good evening! 👋
+    </h1>
+<p class="font-headline-md text-headline-md text-primary font-semibold">
+      Ready to park?
+    </p>
+</div>
+<!-- Clean Calm Status Pills (No clutter) -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Mint Available Pill -->
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-lowest shadow-[0_4px_16px_-2px_rgba(23,32,51,0.05)]">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#059669]"></span>
+</span>
+<span class="font-label-md text-label-md text-[#047857] font-bold">9 SPOTS AVAILABLE</span>
+</div>
+<!-- Coral Occupied Pill -->
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-lowest shadow-[0_4px_16px_-2px_rgba(23,32,51,0.05)]">
+<span class="h-2.5 w-2.5 rounded-full bg-error"></span>
+<span class="font-label-md text-label-md text-error font-bold">1 OCCUPIED</span>
+</div>
+<!-- Sky Blue Fee Pill -->
+<div class="flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-surface-container-lowest shadow-[0_4px_16px_-2px_rgba(23,32,51,0.05)]">
+<span class="material-symbols-outlined text-primary text-[18px]">payments</span>
+<span class="font-label-md text-label-md text-primary font-bold">₹20 TODAY</span>
+</div>
+</div>
+</section>
+<!-- 3D Miniature Diorama Hero Centerpiece Viewport -->
+<section class="relative w-full rounded-xl bg-surface-container-lowest shadow-[0_16px_40px_-8px_rgba(18,27,46,0.08)] p-space-md lg:p-space-lg overflow-hidden mb-space-xl">
+<div class="relative w-full h-[440px] lg:h-[500px] rounded-xl overflow-hidden flex items-center justify-center bg-surface-container-low shadow-inner">
+<!-- High Resolution 3D Miniature Diorama Image Centerpiece -->
+<img alt="3D Miniature Diorama Parking Lot with Ice Blue SUV Entering Bay A06" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-s56kW0pW6ateUcLWV3ky1VqPv1fuyoqLEMwhGVPIaPcqva7uv_yx2t4KO7cb0xL5ckRZgF4UxLSL01HBv1K89yJbAdzehX01f_ftSMQq_MFhRu0inH_iYN1tN5C6_J0-yc_JTIJsl99tZE4eIqIWCL-vGeP3iagIsMqUxt-Pdh5UN4yfF-IQm7vyIw-0KkD8b3hTs49P_l_IVIedor8GzvSjaOeRLpQqil_feGWBDh4l4f5DlnCH"/>
+<!-- Floating Subtle Reserved Slot Indicator (Calm & Minimal) -->
+<div class="absolute top-space-md left-space-md bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-xs rounded-xl shadow-md flex items-center gap-space-sm z-20">
+<span class="flex h-3 w-3 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<div>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Allocated Bay</p>
+<p class="font-headline-sm text-headline-sm text-primary font-bold">Slot A06 <span class="text-body-sm font-normal text-on-surface-variant">(Reserved for You)</span></p>
+</div>
+</div>
+<!-- Prominent Tactile Vibrant Orange Primary CTA Button -->
+<div class="absolute bottom-space-lg left-1/2 -translate-x-1/2 z-20 w-11/12 max-w-md">
+<button class="w-full group relative flex items-center justify-center gap-space-sm px-space-xl py-space-md rounded-xl bg-secondary-container text-on-primary-container font-headline-sm text-headline-sm shadow-[0_12px_28px_-4px_rgba(254,137,60,0.45)] hover:shadow-[0_16px_36px_-2px_rgba(254,137,60,0.6)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200" id="parkCarBtn" type="button">
+<span class="tracking-wide">PARK MY CAR</span>
+<span class="material-symbols-outlined text-[24px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Split Sections: My Vehicle & Parking Spaces Overview -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Left Column: My Vehicle Card (5 cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_4px_20px_-2px_rgba(18,27,46,0.06)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">My Vehicle</h2>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider font-bold">CAR</span>
+</div>
+<!-- Vehicle Preview Card Matching Diorama Miniature -->
+<div class="relative w-full rounded-xl bg-surface-container-low p-space-md mb-space-md overflow-hidden flex items-center gap-space-md">
+<div class="w-24 h-20 flex-shrink-0 bg-surface-container-lowest rounded-lg flex items-center justify-center shadow-sm overflow-hidden p-1">
+<svg class="w-full h-full" fill="none" viewbox="0 0 90 60">
+<ellipse cx="45" cy="48" fill="#121B2E" opacity="0.12" rx="36" ry="6"></ellipse>
+<!-- Mini ice blue Creta silhouette -->
+<path d="M12 36C12 33 14 31 17 31H22L28 19C30 15 34 14 38 14H58C62 14 65 16 67 19L74 31H78C82 31 84 33 84 36V42C84 43 83 44 82 44H79C79 40 76 37 72 37C68 37 65 40 65 44H35C35 40 32 37 28 37C24 37 21 40 21 44H14C13 44 12 43 12 42V36Z" fill="#006EF2"></path>
+<path d="M29 19L38 16H56L64 19L69 29H25L29 19Z" fill="#D9E2FC" fill-opacity="0.9"></path>
+<circle cx="28" cy="44" fill="#121B2E" r="7"></circle>
+<circle cx="28" cy="44" fill="#CBD5E1" r="3.5"></circle>
+<circle cx="72" cy="44" fill="#121B2E" r="7"></circle>
+<circle cx="72" cy="44" fill="#CBD5E1" r="3.5"></circle>
+</svg>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Hyundai Creta</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ice Blue • Compact SUV</p>
+<div class="mt-space-xs inline-block bg-surface-container-lowest px-2 py-0.5 rounded font-label-md text-label-md text-on-surface tracking-wider font-mono shadow-xs">
+            TS 09 AB 5678
+          </div>
+</div>
+</div>
+<!-- Key Vehicle Info Details -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+<span class="font-body-md text-body-md text-on-surface-variant">Allocated Space</span>
+<span class="font-label-md text-label-md text-primary font-bold">Slot A06</span>
+</div>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+<span class="font-body-md text-body-md text-on-surface-variant">Hourly Fee</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">₹20 / hr</span>
+</div>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+<span class="font-body-md text-body-md text-on-surface-variant">Status</span>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-[#059669]"></span>
+<span class="font-label-md text-label-md text-[#047857]">Ready to Park</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Clean Secondary Link -->
+<div class="pt-space-md">
+<a class="group flex items-center justify-between w-full p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-primary font-label-md text-label-md" data-path="my-vehicles" href="#">
+<span>View Garage →</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Right Column: Parking Spaces Overview (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_4px_20px_-2px_rgba(18,27,46,0.06)] flex flex-col justify-between">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">local_parking</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Parking Spaces Overview</h2>
+</div>
+<!-- Clean Legend -->
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-full bg-[#10b981]"></span> Open
+          </div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span> Occupied
+          </div>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span> Allocated
+          </div>
+</div>
+</div>
+<!-- Beautiful Slot Bay Matrix Grid (A01 - A10) -->
+<div class="grid grid-cols-2 sm:grid-cols-5 gap-space-sm mb-space-md" id="slotsMatrix">
+<!-- A01: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A01</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A02: Occupied -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-error-container/60 opacity-85 cursor-not-allowed text-left">
+<span class="font-label-md text-label-md text-on-error-container">A02</span>
+<span class="material-symbols-outlined text-error text-[22px] my-1">cancel</span>
+<span class="font-label-sm text-label-sm text-on-error-container">Taken</span>
+</div>
+<!-- A03: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A03</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A04: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A04</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A05: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A05</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A06: Allocated to User (Sky Blue Glow) -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-primary text-on-primary shadow-[0_6px_16px_rgba(0,110,242,0.35)] -translate-y-0.5 transition-all text-left ring-2 ring-primary-fixed cursor-pointer">
+<span class="font-label-md text-label-md text-on-primary">A06</span>
+<span class="material-symbols-outlined text-on-primary text-[22px] my-1" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<span class="font-label-sm text-label-sm text-on-primary font-bold">Allocated</span>
+</div>
+<!-- A07: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A07</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A08: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A08</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A09: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A09</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+<!-- A10: Open -->
+<div class="flex flex-col items-center justify-center p-space-md rounded-lg bg-[#ecfdf5] hover:bg-[#d1fae5] transition-colors cursor-pointer text-left">
+<span class="font-label-md text-label-md text-[#047857]">A10</span>
+<span class="material-symbols-outlined text-[#059669] text-[22px] my-1">check_circle</span>
+<span class="font-label-sm text-label-sm text-[#065f46]">Open</span>
+</div>
+</div>
+<!-- Focused Allocation Banner for Slot A06 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold text-label-md">A06</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Allocated to your Creta (TS 09 AB 5678)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Direct straight path from main entrance</p>
+</div>
+</div>
+<a class="px-space-md py-1 rounded-lg bg-surface-container-lowest text-primary font-label-sm text-label-sm hover:bg-surface-bright transition-colors shadow-sm" data-path="active-parking" href="#">
+          View Route
+        </a>
+</div>
+</div>
+<!-- Clean Navigation Link -->
+<div class="pt-space-md">
+<a class="group flex items-center justify-between w-full p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-primary font-label-md text-label-md" data-path="parking" href="#">
+<span>Explore All Parking Bays →</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</section></div></main><footer class="w-full mt-space-xl bg-surface-container-low py-space-lg"><div class="max-w-7xl mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><img alt="SmartPark Logo" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WjDs9BLtk4bQsvRR3xAvHrXeAaoGux1xCnFdrEGMsSvibOKs9cFdQftcpJJijC4qOYrf9BQhWWkfrgL1fba8_CZroq70fUPwb93iWaabm-lPFiDPRKCd2bhPJiUJRGUzE2pbNpFTLrNWdU-2XYetNlmFYtm-hTDQye0vZHexQjgi42mjNGcVNvpGWx4ijPnPs0MOwmy8zCmMg2onZRFVCiSsgAUGrmhKnyBuABqZ_ecKhOX9RCzBAOOhs"/><span class="font-headline-sm text-headline-sm text-on-surface">SmartPark</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 SmartPark Mobility Systems. Precision space allocation.</p><div class="flex items-center gap-space-md"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-terms" href="#">Privacy &amp; Terms</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="support" href="#">Support</a></div></div></footer></body></html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>SmartPark</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#e9edff", "outline-variant": "#c1c6d7", "secondary-fixed-dim": "#ffb68d", "inverse-on-surface": "#edf0ff", "on-surface-variant": "#414755", "surface-container-highest": "#d9e2fc", "on-secondary": "#ffffff", "on-tertiary-fixed": "#001c3a", "surface-container-lowest": "#ffffff", "tertiary": "#375d90", "tertiary-fixed-dim": "#a5c8ff", "on-error-container": "#93000a", "inverse-primary": "#afc6ff", "primary-fixed": "#d9e2ff", "secondary-container": "#fe893c", "surface-container-low": "#f1f3ff", "on-secondary-fixed-variant": "#763300", "on-primary-container": "#fefcff", "on-secondary-fixed": "#321200", "surface-dim": "#d1daf4", "primary-container": "#006ef2", "surface-bright": "#f9f9ff", "on-error": "#ffffff", "on-primary-fixed": "#001a43", "primary-fixed-dim": "#afc6ff", "secondary-fixed": "#ffdbc9", "on-primary-fixed-variant": "#004398", "error-container": "#ffdad6", "outline": "#727786", "tertiary-container": "#5176aa", "tertiary-fixed": "#d4e3ff", "surface-variant": "#d9e2fc", "on-background": "#121b2e", "on-surface": "#121b2e", "secondary": "#9a4600", "primary": "#0057c2", "on-tertiary-container": "#fefcff", "on-primary": "#ffffff", "surface": "#f9f9ff", "surface-tint": "#0059c7", "on-secondary-container": "#672c00", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#1e4879", "background": "#f9f9ff", "surface-container-high": "#e1e8ff", "inverse-surface": "#273044" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-sm": "0.5rem", "margin": "2rem", "gutter-sm": "0.75rem", "space-xs": "0.25rem", "space-xl": "2.5rem", "space-md": "1rem", "gutter": "1.5rem", "margin-sm": "1rem" }, "fontFamily": { "label-sm": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Manrope"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "body-lg": ["Manrope"], "label-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-md": ["Manrope"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "800" }], "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }], "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 pt-space-sm px-gutter"><div class="h-20 max-w-7xl mx-auto px-gutter bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-[0_4px_20px_-2px_rgba(18,27,46,0.06),0_1px_3px_0px_rgba(18,27,46,0.03)] flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="SmartPark Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WjDs9BLtk4bQsvRR3xAvHrXeAaoGux1xCnFdrEGMsSvibOKs9cFdQftcpJJijC4qOYrf9BQhWWkfrgL1fba8_CZroq70fUPwb93iWaabm-lPFiDPRKCd2bhPJiUJRGUzE2pbNpFTLrNWdU-2XYetNlmFYtm-hTDQye0vZHexQjgi42mjNGcVNvpGWx4ijPnPs0MOwmy8zCmMg2onZRFVCiSsgAUGrmhKnyBuABqZ_ecKhOX9RCzBAOOhs"/><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface">SmartPark</span></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-xl" data-active-classes="bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm"><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="my-vehicles" href="#">My Vehicles</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="parking" href="#">Parking</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm" data-path="active-parking" href="#">Active Parking</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="history" href="#">History</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-low rounded-full"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span class="font-label-md text-label-md text-on-surface-variant tracking-wide">10:42 AM</span></div><div class="flex items-center gap-space-sm pl-space-sm py-space-xs pr-space-md bg-surface-container-low rounded-full"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbv9BTBlQKAuoiOLeA31w83RdA4MaXCrN0ca_SuBdyUm0SN_BGVb6TY2tBKSje88qUhTiPNkgLnfhtpo8i-tzgSil_KPIQk9aXSIV_s-yH0qIDFAoTaw8xyFmWmnZ2Z3LNqB65Cd0gOTTuWVF1zkKc8x5ry74-5ZJphLLln55meWJ3SA3Ob5Rglu9MbvMdEi2cNbEhy9zvRJWBlKxinR1NDCXs7hj0jt3_2vCwHbqM-xNBZ30hti1_"/><span class="font-label-md text-label-md text-on-surface">Arjun K.</span></div></div></div></header><main class="w-full pt-20 max-w-7xl mx-auto px-gutter"><div class="flex flex-col w-full">
+<section class="w-full pt-space-md pb-space-xl">
+<div class="max-w-6xl mx-auto flex flex-col gap-space-lg">
+<!-- Stepper / Status Tracker Ribbon -->
+<div class="w-full bg-surface-container-lowest shadow-md rounded-xl p-space-md">
+<div class="flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-surface-container text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Exit Sequence Automated</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gate cleared seamlessly via FastTag SmartSensor</p>
+</div>
+</div>
+<!-- Interactive Process Steps -->
+<div class="flex items-center gap-space-xs sm:gap-space-sm overflow-x-auto w-full md:w-auto py-space-xs">
+<!-- Step 1 -->
+<div class="flex items-center gap-space-xs shrink-0 opacity-80">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary flex items-center justify-center font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface">1. Engine Started</span>
+<span class="text-outline-variant font-label-sm mx-1">→</span>
+</div>
+<!-- Step 2 -->
+<div class="flex items-center gap-space-xs shrink-0 opacity-80">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary flex items-center justify-center font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface">2. Exiting Slot A06</span>
+<span class="text-outline-variant font-label-sm mx-1">→</span>
+</div>
+<!-- Step 3 -->
+<div class="flex items-center gap-space-xs shrink-0 opacity-90">
+<span class="w-6 h-6 rounded-full bg-surface-container-high text-primary flex items-center justify-center font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface">3. Gate Cleared</span>
+<span class="text-outline-variant font-label-sm mx-1">→</span>
+</div>
+<!-- Step 4 (Active/Done) -->
+<div class="flex items-center gap-space-xs shrink-0 bg-primary-container/10 px-space-sm py-space-xs rounded-full">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-sm text-label-sm shadow-sm">
+<span class="material-symbols-outlined text-[14px]">done_all</span>
+</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">4. Complete</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Stage Split Bento: Miniature 3D Departure Diorama + Tactile Ticket Receipt -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left: Diorama Canvas & Farewell Card (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Tactile Miniature Diorama Viewport -->
+<div class="relative w-full h-[410px] bg-surface-container-low rounded-xl overflow-hidden shadow-xl flex flex-col justify-between p-space-md select-none">
+<!-- Isometric Diorama Scenic Canvas (CSS 3D styled elements) -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden">
+<!-- Ground Plane Grid -->
+<div class="absolute inset-0 opacity-40 bg-[radial-gradient(#c1c6d7_1px,transparent_1px)] [background-size:24px_24px]"></div>
+<!-- Painted Curved Driveway Lane -->
+<svg class="absolute inset-0 w-full h-full" fill="none" preserveaspectratio="none" viewbox="0 0 600 400">
+<!-- Outer asphalt road -->
+<path d="M 80 120 C 180 120, 240 220, 360 220 L 580 220" stroke="#d9e2fc" stroke-linecap="round" stroke-width="78"></path>
+<!-- Inner asphalt curb guide -->
+<path d="M 80 120 C 180 120, 240 220, 360 220 L 580 220" stroke="#edf0ff" stroke-linecap="round" stroke-width="70"></path>
+<!-- Dashed Lane divider -->
+<path d="M 80 120 C 180 120, 240 220, 360 220 L 580 220" stroke="#727786" stroke-dasharray="10 10" stroke-opacity="0.45" stroke-width="2.5"></path>
+</svg>
+<!-- Slot A06 Architecture Pocket -->
+<div class="absolute top-12 left-10 w-28 h-36 bg-surface-container-lowest rounded-lg shadow-md p-space-xs flex flex-col justify-between transform -rotate-6 transition-all duration-700">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-bold">SLOT</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+                    VACANT
+                  </span>
+</div>
+<div class="text-center py-2">
+<span class="font-headline-md text-headline-md text-primary font-extrabold tracking-tight">A06</span>
+<p class="text-[9px] text-outline font-medium">Level P1 • North</p>
+</div>
+<div class="w-full py-1 bg-surface-container rounded flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-emerald-600 text-[14px]">check_circle</span>
+<span class="text-[10px] font-bold text-emerald-700">Cleared</span>
+</div>
+</div>
+<!-- Departure Direction Arrow Trail -->
+<div class="absolute top-[138px] left-[175px] transform rotate-12 opacity-60">
+<span class="material-symbols-outlined text-primary text-[28px] animate-pulse">fast_forward</span>
+</div>
+<!-- Animated Moving Hyundai Creta miniature vehicle -->
+<div class="absolute top-[182px] left-[230px] z-20 flex items-center gap-2 transition-transform duration-1000 ease-out cursor-pointer group" id="mini-vehicle">
+<!-- Vehicle Resin Body -->
+<div class="relative w-28 h-14 bg-primary rounded-xl shadow-[0_12px_24px_rgba(0,87,194,0.35)] flex items-center justify-between px-2 text-on-primary">
+<!-- Front Headlight beam glow -->
+<div class="absolute -right-12 top-1.5 w-16 h-11 bg-gradient-to-r from-amber-200/50 to-transparent rounded-r-full blur-sm pointer-events-none"></div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary-fixed">directions_car</span>
+<span class="font-label-sm text-label-sm text-on-primary tracking-tighter uppercase">Creta</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[8px] tracking-wider px-1 bg-on-primary/20 rounded font-mono">TS09</span>
+<span class="text-[9px] font-bold">AB5678</span>
+</div>
+<!-- Wheels -->
+<div class="absolute -bottom-1.5 left-3 w-4 h-4 bg-inverse-surface rounded-full shadow-inner"></div>
+<div class="absolute -bottom-1.5 right-3 w-4 h-4 bg-inverse-surface rounded-full shadow-inner"></div>
+</div>
+<!-- Soft 3D Exhaust Puff Particles -->
+<div class="relative -ml-4 flex items-center pointer-events-none">
+<span class="w-3 h-3 rounded-full bg-outline-variant/40 blur-[1px] -translate-x-1 animate-ping"></span>
+<span class="w-4 h-4 rounded-full bg-surface-container-highest/60 blur-[2px] -translate-x-3 -translate-y-1 animate-pulse"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant/30 blur-[1px] -translate-x-5 animate-bounce"></span>
+</div>
+</div>
+<!-- Open Exit Gate & Sensor Gantry -->
+<div class="absolute top-[140px] right-12 flex flex-col items-center z-10">
+<!-- Open boom barrier (rotated upwards 45deg) -->
+<div class="relative flex items-end">
+<div class="w-4 h-16 bg-on-surface-variant rounded-t-sm flex flex-col justify-around py-1 items-center">
+<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest"></span>
+</div>
+<!-- Barrier Arm open up -->
+<div class="w-24 h-2.5 bg-secondary-container origin-bottom-left -rotate-45 transform rounded-full shadow-md"></div>
+</div>
+<span class="mt-1 font-label-sm text-label-sm text-on-surface font-bold bg-surface-container-lowest px-2 py-0.5 rounded shadow-sm">
+                  GATE 02 • OPEN
+                </span>
+</div>
+<!-- Miniature Roadside Trees (Diorama Elements) -->
+<div class="absolute bottom-6 left-28 flex items-center gap-6">
+<!-- Tree 1 -->
+<div class="flex flex-col items-center">
+<div class="w-9 h-9 rounded-full bg-emerald-600/80 shadow-md flex items-center justify-center">
+<div class="w-6 h-6 rounded-full bg-emerald-500"></div>
+</div>
+<div class="w-1.5 h-3 bg-secondary/60 rounded-b"></div>
+</div>
+<!-- Tree 2 -->
+<div class="flex flex-col items-center -ml-2">
+<div class="w-7 h-7 rounded-full bg-emerald-700/80 shadow-md flex items-center justify-center">
+<div class="w-4 h-4 rounded-full bg-emerald-400"></div>
+</div>
+<div class="w-1 h-2 bg-secondary/60 rounded-b"></div>
+</div>
+</div>
+<!-- Tree at Exit -->
+<div class="absolute bottom-6 right-24 flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-emerald-600/90 shadow-md flex items-center justify-center">
+<div class="w-7 h-7 rounded-full bg-emerald-500"></div>
+</div>
+<div class="w-2 h-3.5 bg-secondary/60 rounded-b"></div>
+</div>
+</div>
+<!-- Top HUD Badge: Live Telemetry Overlay -->
+<div class="relative z-30 flex items-center justify-between">
+<div class="flex items-center gap-space-xs bg-surface-container-lowest/90 backdrop-blur px-space-sm py-1 rounded-full shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Live Departure Telemetry</span>
+</div>
+<div class="bg-surface-container-lowest/90 backdrop-blur px-space-sm py-1 rounded-full shadow-sm flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-primary">speed</span>
+<span>Speed: 12 km/h</span>
+</div>
+</div>
+<!-- Bottom Floating Prompt on Diorama -->
+<div class="relative z-30 flex items-end justify-between">
+<div class="bg-surface-container-lowest/95 backdrop-blur p-space-sm rounded-lg shadow-md max-w-xs">
+<p class="font-label-md text-label-md text-on-surface">Departing Lane 01</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gate boom will remain elevated for 45 seconds.</p>
+</div>
+<button class="bg-surface-container-lowest text-primary hover:bg-surface-container font-label-md text-label-md px-space-md py-space-xs rounded-full shadow-md flex items-center gap-1 transition-all" id="replay-btn" type="button">
+<span class="material-symbols-outlined text-[16px]">replay</span>
+<span>Replay Departure</span>
+</button>
+</div>
+</div>
+<!-- Warm Personal Farewell Headline Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center shrink-0 shadow-inner">
+<span class="text-2xl select-none">👋</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+                  See you next time, Arjun!
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-0.5">
+                  Parking complete • Safe travels on the highway!
+                </p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-stretch sm:self-auto justify-end">
+<div class="px-space-md py-space-xs rounded-lg bg-surface-container text-primary font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>No Violations</span>
+</div>
+</div>
+</div>
+<!-- Quick Facility Feedback Widget -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-2xl">sentiment_very_satisfied</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">How was your parking experience?</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Slot A06 cleanliness &amp; bay sensors</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary text-on-surface-variant flex items-center justify-center text-sm transition-colors shadow-sm">★</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary text-on-surface-variant flex items-center justify-center text-sm transition-colors shadow-sm">★</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary text-on-surface-variant flex items-center justify-center text-sm transition-colors shadow-sm">★</button>
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest hover:bg-primary hover:text-on-primary text-on-surface-variant flex items-center justify-center text-sm transition-colors shadow-sm">★</button>
+<button class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center text-sm shadow-sm font-bold">★</button>
+</div>
+</div>
+</div>
+<!-- Right: Tactile Parking Receipt Ticket (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Notched Physical Ticket Card Design -->
+<div class="relative bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<!-- Top Color Accent Bar -->
+<div class="h-2 w-full bg-gradient-to-r from-primary via-primary-container to-secondary-container"></div>
+<!-- Receipt Header -->
+<div class="p-space-lg pb-space-md">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm tracking-tight text-on-surface">SmartPark</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-primary">OFFICIAL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Forum Mall Terminal • Gate 02</p>
+</div>
+<!-- PAID Stamp Badge -->
+<div class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border-2 border-emerald-500/30 flex items-center gap-1 shadow-sm transform rotate-3">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">verified</span>
+<span class="font-label-sm text-label-sm font-extrabold tracking-wider">PAID</span>
+</div>
+</div>
+<!-- Transaction ID & Barcode Mock -->
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-outline">
+<span class="font-mono text-[11px]">REC-2025-0521-8834</span>
+<span class="font-mono text-[11px]">FASTag #8849021</span>
+</div>
+</div>
+<!-- Decorative Perforation Divider with Left and Right Circular Notches -->
+<div class="relative w-full flex items-center justify-center my-space-xs">
+<!-- Left Notch -->
+<div class="absolute -left-3 w-6 h-6 rounded-full bg-surface"></div>
+<!-- Dashed Perforation Line -->
+<div class="w-full border-b-2 border-dashed border-outline-variant/60 mx-4"></div>
+<!-- Right Notch -->
+<div class="absolute -right-3 w-6 h-6 rounded-full bg-surface"></div>
+</div>
+<!-- Receipt Breakdown Body -->
+<div class="p-space-lg pt-space-md flex flex-col gap-space-md">
+<!-- Vehicle Info Box -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">directions_car</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Hyundai Creta</p>
+<p class="font-mono text-body-sm text-on-surface-variant">TS 09 AB 5678</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-sm text-label-sm text-outline font-semibold uppercase">Assigned Slot</p>
+<p class="font-headline-sm text-headline-sm text-primary font-bold">A06</p>
+</div>
+</div>
+<!-- Timeline Metric Grid -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container-lowest p-space-sm rounded-lg bg-surface-container/30">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">login</span>
+                    Check-in Time
+                  </span>
+<p class="font-label-lg text-label-lg text-on-surface mt-1 font-mono">10:18 AM</p>
+<p class="text-[10px] text-outline">Today</p>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg bg-surface-container/30">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">logout</span>
+                    Check-out Time
+                  </span>
+<p class="font-label-lg text-label-lg text-on-surface mt-1 font-mono">10:42 AM</p>
+<p class="text-[10px] text-emerald-600 font-bold">Auto-detected</p>
+</div>
+</div>
+<!-- Cost calculation details -->
+<div class="space-y-space-xs text-body-md text-body-md text-on-surface-variant">
+<div class="flex justify-between items-center py-1">
+<span>Total Duration</span>
+<span class="font-label-md text-label-md text-on-surface font-mono">24 minutes</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span>Base Fare (First 1 hr flat)</span>
+<span class="font-mono text-on-surface">₹20.00</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span>Sensor Allocation &amp; Security</span>
+<span class="text-emerald-700 font-label-sm text-label-sm font-bold">INCLUDED</span>
+</div>
+<div class="flex justify-between items-center py-1">
+<span>Taxes (CGST + SGST 18%)</span>
+<span class="font-mono text-on-surface">₹0.00 (Exempt)</span>
+</div>
+</div>
+<!-- Total Payable Amount -->
+<div class="bg-surface-container-high/60 rounded-xl p-space-md flex items-center justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider font-extrabold">Final Amount Paid</p>
+<p class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[15px]">account_balance_wallet</span>
+                    SmartPark Direct Pay
+                  </p>
+</div>
+<div class="text-right">
+<span class="font-headline-lg text-headline-lg text-on-surface font-extrabold tracking-tight">₹20</span>
+</div>
+</div>
+<!-- Barcode Graphic for gate pass backup -->
+<div class="w-full flex flex-col items-center gap-1 pt-1 opacity-70">
+<div class="flex items-center gap-1 h-8">
+<span class="w-1 h-full bg-on-surface rounded-full"></span>
+<span class="w-2 h-full bg-on-surface rounded-full"></span>
+<span class="w-0.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-1.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-0.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-3 h-full bg-on-surface rounded-full"></span>
+<span class="w-1 h-full bg-on-surface rounded-full"></span>
+<span class="w-2.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-1 h-full bg-on-surface rounded-full"></span>
+<span class="w-0.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-2 h-full bg-on-surface rounded-full"></span>
+<span class="w-1.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-3 h-full bg-on-surface rounded-full"></span>
+<span class="w-0.5 h-full bg-on-surface rounded-full"></span>
+<span class="w-1 h-full bg-on-surface rounded-full"></span>
+</div>
+<span class="text-[9px] font-mono tracking-widest text-outline">0049 8219 4018</span>
+</div>
+</div>
+<!-- Receipt Actions Footer -->
+<div class="p-space-lg pt-0 flex flex-col gap-space-sm">
+<button class="w-full py-space-sm px-space-md bg-secondary-container hover:bg-secondary text-on-secondary rounded-lg font-label-lg text-label-lg shadow-md transition-all flex items-center justify-center gap-2 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">home</span>
+<span>Back to Home</span>
+</button>
+<button class="w-full py-space-sm px-space-md bg-surface-container-low hover:bg-surface-container text-primary rounded-lg font-label-md text-label-md transition-colors flex items-center justify-center gap-2" id="download-receipt-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Download Receipt PDF</span>
+</button>
+</div>
+</div>
+<!-- Micro Carbon Footprint Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">eco</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface font-bold">Paperless Smart Clearance</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Saved 12g CO₂ by bypassing kiosk line</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-emerald-600 bg-emerald-50 px-2 py-1 rounded font-bold">+10 Pts</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Diorama Replay Micro-Interaction Logic -->
+<script>
+    (function() {
+      const vehicle = document.getElementById('mini-vehicle');
+      const replayBtn = document.getElementById('replay-btn');
+      const downloadBtn = document.getElementById('download-receipt-btn');
+
+      if (vehicle && replayBtn) {
+        replayBtn.addEventListener('click', () => {
+          // Reset to slot origin
+          vehicle.style.transition = 'none';
+          vehicle.style.transform = 'translate(-120px, -40px) rotate(-15deg) scale(0.9)';
+          vehicle.style.opacity = '0.5';
+
+          setTimeout(() => {
+            // Glide smoothly onto road then towards exit gate
+            vehicle.style.transition = 'all 1.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            vehicle.style.transform = 'translate(0px, 0px) rotate(0deg) scale(1)';
+            vehicle.style.opacity = '1';
+          }, 100);
+        });
+      }
+
+      if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+          const originalText = downloadBtn.innerHTML;
+          downloadBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span><span>Preparing PDF...</span>';
+          setTimeout(() => {
+            downloadBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-emerald-600">check_circle</span><span>Receipt Saved!</span>';
+            setTimeout(() => {
+              downloadBtn.innerHTML = originalText;
+            }, 2500);
+          }, 1200);
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full mt-space-xl bg-surface-container-low py-space-lg"><div class="max-w-7xl mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><img alt="SmartPark Logo" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WjDs9BLtk4bQsvRR3xAvHrXeAaoGux1xCnFdrEGMsSvibOKs9cFdQftcpJJijC4qOYrf9BQhWWkfrgL1fba8_CZroq70fUPwb93iWaabm-lPFiDPRKCd2bhPJiUJRGUzE2pbNpFTLrNWdU-2XYetNlmFYtm-hTDQye0vZHexQjgi42mjNGcVNvpGWx4ijPnPs0MOwmy8zCmMg2onZRFVCiSsgAUGrmhKnyBuABqZ_ecKhOX9RCzBAOOhs"/><span class="font-headline-sm text-headline-sm text-on-surface">SmartPark</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 SmartPark Mobility Systems. Precision space allocation.</p><div class="flex items-center gap-space-md"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-terms" href="#">Privacy &amp; Terms</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="support" href="#">Support</a></div></div></footer></body></html>
