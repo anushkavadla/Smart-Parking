@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>SmartPark</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#e9edff", "outline-variant": "#c1c6d7", "secondary-fixed-dim": "#ffb68d", "inverse-on-surface": "#edf0ff", "on-surface-variant": "#414755", "surface-container-highest": "#d9e2fc", "on-secondary": "#ffffff", "on-tertiary-fixed": "#001c3a", "surface-container-lowest": "#ffffff", "tertiary": "#375d90", "tertiary-fixed-dim": "#a5c8ff", "on-error-container": "#93000a", "inverse-primary": "#afc6ff", "primary-fixed": "#d9e2ff", "secondary-container": "#fe893c", "surface-container-low": "#f1f3ff", "on-secondary-fixed-variant": "#763300", "on-primary-container": "#fefcff", "on-secondary-fixed": "#321200", "surface-dim": "#d1daf4", "primary-container": "#006ef2", "surface-bright": "#f9f9ff", "on-error": "#ffffff", "on-primary-fixed": "#001a43", "primary-fixed-dim": "#afc6ff", "secondary-fixed": "#ffdbc9", "on-primary-fixed-variant": "#004398", "error-container": "#ffdad6", "outline": "#727786", "tertiary-container": "#5176aa", "tertiary-fixed": "#d4e3ff", "surface-variant": "#d9e2fc", "on-background": "#121b2e", "on-surface": "#121b2e", "secondary": "#9a4600", "primary": "#0057c2", "on-tertiary-container": "#fefcff", "on-primary": "#ffffff", "surface": "#f9f9ff", "surface-tint": "#0059c7", "on-secondary-container": "#672c00", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#1e4879", "background": "#f9f9ff", "surface-container-high": "#e1e8ff", "inverse-surface": "#273044" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-sm": "0.5rem", "margin": "2rem", "gutter-sm": "0.75rem", "space-xs": "0.25rem", "space-xl": "2.5rem", "space-md": "1rem", "gutter": "1.5rem", "margin-sm": "1rem" }, "fontFamily": { "label-sm": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Manrope"], "headline-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "body-lg": ["Manrope"], "label-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-md": ["Manrope"] }, "fontSize": { "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "800" }], "headline-xl-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "28px", "fontWeight": "700" }], "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 pt-space-sm px-gutter"><div class="h-20 max-w-7xl mx-auto px-gutter bg-surface-container-lowest/95 backdrop-blur-md rounded-xl shadow-[0_4px_20px_-2px_rgba(18,27,46,0.06),0_1px_3px_0px_rgba(18,27,46,0.03)] flex items-center justify-between"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="SmartPark Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WjDs9BLtk4bQsvRR3xAvHrXeAaoGux1xCnFdrEGMsSvibOKs9cFdQftcpJJijC4qOYrf9BQhWWkfrgL1fba8_CZroq70fUPwb93iWaabm-lPFiDPRKCd2bhPJiUJRGUzE2pbNpFTLrNWdU-2XYetNlmFYtm-hTDQye0vZHexQjgi42mjNGcVNvpGWx4ijPnPs0MOwmy8zCmMg2onZRFVCiSsgAUGrmhKnyBuABqZ_ecKhOX9RCzBAOOhs"/><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface">SmartPark</span></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-low rounded-xl" data-active-classes="bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm"><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-label-md text-label-md rounded-lg shadow-sm" data-path="my-vehicles" href="#">My Vehicles</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="parking" href="#">Parking</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="active-parking" href="#">Active Parking</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="history" href="#">History</a><a class="px-space-md py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#">Profile</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-low rounded-full"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span class="font-label-md text-label-md text-on-surface-variant tracking-wide">10:42 AM</span></div><div class="flex items-center gap-space-sm pl-space-sm py-space-xs pr-space-md bg-surface-container-low rounded-full"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbv9BTBlQKAuoiOLeA31w83RdA4MaXCrN0ca_SuBdyUm0SN_BGVb6TY2tBKSje88qUhTiPNkgLnfhtpo8i-tzgSil_KPIQk9aXSIV_s-yH0qIDFAoTaw8xyFmWmnZ2Z3LNqB65Cd0gOTTuWVF1zkKc8x5ry74-5ZJphLLln55meWJ3SA3Ob5Rglu9MbvMdEi2cNbEhy9zvRJWBlKxinR1NDCXs7hj0jt3_2vCwHbqM-xNBZ30hti1_"/><span class="font-label-md text-label-md text-on-surface">Arjun K.</span></div></div></div></header><main class="w-full pt-20 max-w-7xl mx-auto px-gutter"><div class="flex flex-col w-full">
+<!-- Top Command Bar & Meta Counters -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg mb-space-xl">
+<div>
+<div class="flex items-center gap-space-sm mb-space-xs">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary-fixed text-primary text-label-sm font-label-sm">3</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Connected Fleet Hub</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">My Digital Garage</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mt-space-xs">
+        Manage your registered vehicles, live slot assignments, and automated valet preferences in one tactile space.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<div class="hidden xl:flex items-center gap-space-md px-space-md py-space-sm bg-surface-container-low rounded-xl shadow-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">EV Quota</span>
+<span class="font-headline-sm text-headline-sm text-primary">82% <span class="font-body-sm text-body-sm text-on-surface-variant">Avg Soc</span></span>
+</div>
+<div class="w-px h-8 bg-outline-variant/40"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Toll Pass</span>
+<span class="font-label-lg text-label-lg text-on-surface flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Active
+          </span>
+</div>
+</div>
+<button class="flex items-center gap-space-sm px-space-lg py-3 rounded-full bg-primary text-on-primary font-label-lg text-label-lg shadow-[0_4px_16px_-2px_rgba(0,87,194,0.3)] hover:shadow-lg hover:bg-primary-container transition-all active:scale-95" id="open-add-modal-btn">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+<span>+ Add Vehicle</span>
+</button>
+</div>
+</div>
+<!-- Primary Interactive Grid / Diorama Stage + Quick Drawer Panel -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left / Center: The 3D Fleet Showcase Grid -->
+<div class="xl:col-span-8 flex flex-col gap-space-lg">
+<!-- Diorama Arena Header Filters -->
+<div class="p-space-md bg-surface-container-lowest rounded-xl shadow-[0_4px_20px_-2px_rgba(18,27,46,0.04)] flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-lowest font-label-md text-label-md text-on-surface shadow-sm transition-all">All Bays (3)</button>
+<button class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all">Electric (1)</button>
+<button class="px-space-md py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all">Active Session (1)</button>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> Primary</span>
+<span class="flex items-center gap-1 ml-2"><span class="w-2 h-2 rounded-full bg-secondary-container"></span> FastTag Synced</span>
+</div>
+</div>
+<!-- Vehicle Card 1: Hyundai Creta (Ice Blue Metallic) - Active Primary -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_12px_28px_-4px_rgba(23,32,51,0.06),0_2px_4px_0px_rgba(23,32,51,0.02)] transition-all hover:shadow-[0_20px_36px_-6px_rgba(0,87,194,0.12)]">
+<div class="absolute -top-3 left-6 px-space-md py-0.5 bg-primary text-on-primary rounded-full font-label-sm text-label-sm flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>PRIMARY VEHICLE</span>
+</div>
+<div class="flex flex-col lg:flex-row gap-space-lg items-center mt-space-xs">
+<!-- Diorama Vehicle Visual Bay -->
+<div class="relative w-full lg:w-72 h-52 bg-gradient-to-b from-surface-container-low to-surface-container rounded-xl overflow-hidden flex flex-col items-center justify-center p-space-md group-hover:scale-[1.01] transition-transform duration-300">
+<!-- Simulated Isometric Flooring Grid Lines -->
+<div class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#0057c2_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<div class="absolute top-3 left-3 px-2 py-1 rounded bg-surface-container-lowest/80 backdrop-blur-sm font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">local_parking</span> Slot A06
+            </div>
+<img class="relative z-10 w-56 h-36 object-contain drop-shadow-[0_18px_12px_rgba(18,27,46,0.18)]" data-alt="Stylized 3D miniature isometric render of an Ice Blue metallic compact SUV car resting on an architectural toy-box pedestal with subtle studio soft ambient lighting, clean reflections, pastel cream undertones, rendered in octane blender style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx44sK-lnnqcM7dE-2yrZFSGPOT-iX67r5brFleIizPR1tDOBqCV9gs1G_hjrxIKVSdl4Pxf9J-FQZzdqEGBc-GePI_2qpr53__WLmOMosa6PauGCxgbp1Vr68-JRlP55XwLrzBJxeDsvJizs4VOn_nwmmQtXMDEvKMmazd571K043L6l0aaIQnhukt2fiZRwPGYi4Lg9JkPKJi78t_waygKtFdRk9LnE74DTcGuFHgdThkoyLPKmE"/>
+<div class="w-40 h-3 bg-on-surface/10 rounded-full blur-md mt-1"></div>
+</div>
+<!-- Specs & Live Details -->
+<div class="flex-1 flex flex-col justify-between w-full">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Hyundai Creta</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Compact SUV</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary font-label-md text-label-md">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span>Currently Parked (Slot A06)</span>
+</div>
+</div>
+<!-- Plate & Physical Badges -->
+<div class="flex items-center gap-space-md mt-space-sm">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-lg font-label-lg text-label-lg tracking-widest text-on-surface">
+<span class="w-3 h-4 bg-primary text-[8px] text-white flex items-center justify-center font-bold rounded-xs">IND</span>
+<span>TS 09 AB 5678</span>
+</div>
+<span class="text-on-surface-variant font-body-sm text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-tertiary">cloud_download</span> Checked in: 2h 14m ago
+                </span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mt-space-md pt-space-md bg-surface-container-low/50 p-space-sm rounded-xl">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Color Finish</div>
+<div class="font-label-md text-label-md text-on-surface flex items-center gap-1.5 mt-0.5">
+<span class="w-3 h-3 rounded-full bg-sky-300 shadow-xs"></span> Ice Blue Met.
+                  </div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Clearance</div>
+<div class="font-label-md text-label-md text-on-surface mt-0.5">1.90m Safe</div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Tariff Mode</div>
+<div class="font-label-md text-label-md text-on-surface mt-0.5">Corporate Valet</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mt-space-md pt-space-sm">
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-base text-primary">sensors</span> Telematics Synced
+              </div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1" onclick="selectVehicle('Hyundai Creta', 'TS09AB5678', 'Compact SUV', 'Ice Blue Metallic', 'Covered / Ground Floor Only')">
+<span class="material-symbols-outlined text-base">edit</span> Edit Details
+                </button>
+<a class="px-space-md py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md shadow-sm transition-all flex items-center gap-1" data-path="active-parking" href="#">
+<span class="material-symbols-outlined text-base">near_me</span> View Live Parking
+                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Vehicle Card 2: Tata Nexon EV (Mint Green / White Roof) -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_4px_20px_-2px_rgba(23,32,51,0.05),0_1px_3px_0px_rgba(23,32,51,0.03)] transition-all hover:shadow-[0_12px_28px_-4px_rgba(23,32,51,0.08)]">
+<div class="flex flex-col lg:flex-row gap-space-lg items-center">
+<!-- Visual Diorama Canvas -->
+<div class="relative w-full lg:w-72 h-52 bg-gradient-to-b from-surface-container-low to-surface-container rounded-xl overflow-hidden flex flex-col items-center justify-center p-space-md group-hover:scale-[1.01] transition-transform duration-300">
+<div class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#375d90_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<div class="absolute top-3 left-3 px-2 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-sm font-label-sm text-label-sm text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">bolt</span> EV Bay Ready
+            </div>
+<img class="relative z-10 w-56 h-36 object-contain drop-shadow-[0_18px_12px_rgba(18,27,46,0.18)]" data-alt="Stylized 3D miniature isometric diorama of a Mint Green electric crossover SUV with a pristine white roof, positioned on a toy miniature asphalt plinth with soft directional rim lighting, studio product photo, clean pastel accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKgMbpyklVDMO4Mc2H-gcys5f0RAJJ7Vdst96wWXLMVjnO7RmeVTB0OBEu1VOUDrm1fFT5fuEECgYrlKVt3_qASf2Cb01GPSvWZnmmSAN7vViTn-iqvSZZmv7YJCyNzjxBoVVo4z6VvswI6WsfUDTndUvJixyBHW8PsPHSyfF1jTjDIDWlS9H1RdToPUb0Nj6lIzkZhafesEzARm_GwcH7jJlNiAAQpe5f-i-9iIVrfZzAp_LI2ntD"/>
+<div class="w-40 h-3 bg-on-surface/10 rounded-full blur-md mt-1"></div>
+</div>
+<!-- Spec Details -->
+<div class="flex-1 flex flex-col justify-between w-full">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Tata Nexon EV</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Electric SUV</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>Available / In Garage</span>
+</div>
+</div>
+<!-- Plate & Power Indicator -->
+<div class="flex flex-wrap items-center gap-space-md mt-space-sm">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-lg font-label-lg text-label-lg tracking-widest text-on-surface">
+<span class="w-3 h-4 bg-tertiary text-[8px] text-white flex items-center justify-center font-bold rounded-xs">IND</span>
+<span>TS 08 CD 1234</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-sm text-primary">battery_charging_90</span>
+<span>Battery: 88% (312 km range)</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mt-space-md pt-space-md bg-surface-container-low/50 p-space-sm rounded-xl">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Color Finish</div>
+<div class="font-label-md text-label-md text-on-surface flex items-center gap-1.5 mt-0.5">
+<span class="w-3 h-3 rounded-full bg-teal-300 shadow-xs"></span> Mint / White
+                  </div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Connector</div>
+<div class="font-label-md text-label-md text-on-surface mt-0.5">CCS-2 (Fast)</div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Auto-Recharge</div>
+<div class="font-label-md text-label-md text-primary mt-0.5 font-bold">Enabled (&lt;30%)</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mt-space-md pt-space-sm">
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-base text-tertiary">power</span> EV Priority Slot Eligible
+              </div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-md text-label-md transition-colors" onclick="setPrimary('Tata Nexon EV')">
+                  Set as Active
+                </button>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors" onclick="selectVehicle('Tata Nexon EV', 'TS08CD1234', 'Electric SUV', 'Mint Green / White roof', 'Requires EV Charger (50kW+)')" title="Edit Vehicle">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-error-container text-on-surface hover:text-error transition-colors" title="Remove Vehicle">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Vehicle Card 3: Maruti Swift (Warm Coral) - City Runabout -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_4px_20px_-2px_rgba(23,32,51,0.05),0_1px_3px_0px_rgba(23,32,51,0.03)] transition-all hover:shadow-[0_12px_28px_-4px_rgba(23,32,51,0.08)]">
+<div class="flex flex-col lg:flex-row gap-space-lg items-center">
+<!-- Visual Diorama Canvas -->
+<div class="relative w-full lg:w-72 h-52 bg-gradient-to-b from-surface-container-low to-surface-container rounded-xl overflow-hidden flex flex-col items-center justify-center p-space-md group-hover:scale-[1.01] transition-transform duration-300">
+<div class="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(#121b2e_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<div class="absolute top-3 left-3 px-2 py-1 rounded bg-surface-container-lowest/90 backdrop-blur-sm font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">tune</span> Compact Spot Compatible
+            </div>
+<img class="relative z-10 w-52 h-32 object-contain drop-shadow-[0_18px_12px_rgba(18,27,46,0.18)]" data-alt="Stylized 3D miniature isometric toy render of a Warm Coral red modern hatchback city runabout vehicle, smooth resin curves, soft ambient occlusion, clean white platform background, studio lighting aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHNBOqtZ_6qsqzwSrVZRaEDYnsShvcafAcXYy2j3WV38W59qv-4spj0gqSv7POFDpQhcK0jzbcnDtitd19Pe04NQ88OYt2J5aNbITTD_SjS37MaK8zrwHrukSOvZOOlVa6zAVlH75EfNJgR1KOJjDUYBMsGjgDU07O5naUHzBzYo_qiLYBVweSblShes8pDghiqHYQx07VzMbcwD5zNh_vrcvT_g24-aKZxYcGCxag6IJiZAkqO4FS"/>
+<div class="w-36 h-3 bg-on-surface/10 rounded-full blur-md mt-1"></div>
+</div>
+<!-- Specs & Quick Indicators -->
+<div class="flex-1 flex flex-col justify-between w-full">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Maruti Swift</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Hatchback</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>Available</span>
+</div>
+</div>
+<!-- Plate -->
+<div class="flex items-center gap-space-md mt-space-sm">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-lg font-label-lg text-label-lg tracking-widest text-on-surface">
+<span class="w-3 h-4 bg-primary text-[8px] text-white flex items-center justify-center font-bold rounded-xs">IND</span>
+<span>KA 03 EF 9876</span>
+</div>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Last parked: 3 days ago at Phoenix Mall</span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm mt-space-md pt-space-md bg-surface-container-low/50 p-space-sm rounded-xl">
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Color Finish</div>
+<div class="font-label-md text-label-md text-on-surface flex items-center gap-1.5 mt-0.5">
+<span class="w-3 h-3 rounded-full bg-secondary-container shadow-xs"></span> Warm Coral
+                  </div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Fuel Type</div>
+<div class="font-label-md text-label-md text-on-surface mt-0.5">Petrol Mild-Hybrid</div>
+</div>
+<div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Access Tier</div>
+<div class="font-label-md text-label-md text-on-surface mt-0.5">City Standard</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mt-space-md pt-space-sm">
+<div class="flex items-center gap-space-xs text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-base text-outline">verified</span> FastTag Auto-Debited
+              </div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-md text-label-md transition-colors" onclick="setPrimary('Maruti Swift')">
+                  Set as Active
+                </button>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors" onclick="selectVehicle('Maruti Swift', 'KA03EF9876', 'Hatchback', 'Warm Coral', 'Compact Spot Preferred')" title="Edit Vehicle">
+<span class="material-symbols-outlined text-base">edit</span>
+</button>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-error-container text-on-surface hover:text-error transition-colors" title="Remove Vehicle">
+<span class="material-symbols-outlined text-base">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Contextual Management Drawer / Quick Config Panel -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg sticky top-24">
+<!-- Quick Vehicle Details & Preferences Drawer Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_12px_28px_-4px_rgba(23,32,51,0.06),0_2px_4px_0px_rgba(23,32,51,0.02)]" id="details-card">
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Quick Details</h3>
+</div>
+<span class="text-label-sm font-label-sm px-2 py-0.5 bg-surface-container-high rounded text-on-surface-variant uppercase">Inspector</span>
+</div>
+<form class="flex flex-col gap-space-md" id="vehicle-quick-form" onsubmit="event.preventDefault(); saveFeedback();">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1.5">Vehicle Nickname / Model</label>
+<div class="flex items-center gap-space-sm px-space-md py-2.5 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-tertiary text-base">directions_car</span>
+<input class="w-full bg-transparent border-none text-on-surface font-body-md text-body-md focus:outline-none" id="drawer-model" type="text" value="Hyundai Creta"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1.5">License Plate Number</label>
+<div class="flex items-center gap-space-sm px-space-md py-2.5 bg-surface-container-low rounded-xl">
+<span class="material-symbols-outlined text-tertiary text-base">pin</span>
+<input class="w-full bg-transparent border-none text-on-surface font-label-lg text-label-lg uppercase tracking-wider focus:outline-none" id="drawer-plate" type="text" value="TS09AB5678"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1.5">Body Type</label>
+<select class="w-full px-space-sm py-2.5 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-xl focus:outline-none cursor-pointer" id="drawer-type">
+<option selected="">SUV</option>
+<option>Hatchback</option>
+<option>Sedan</option>
+<option>Two-Wheeler</option>
+</select>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1.5">Color Shading</label>
+<input class="w-full px-space-sm py-2.5 bg-surface-container-low text-on-surface font-body-md text-body-md rounded-xl focus:outline-none" id="drawer-color" type="text" value="Ice Blue Metallic"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1.5">Default Parking Preferences</label>
+<div class="flex flex-col gap-2 bg-surface-container-low p-space-sm rounded-xl">
+<label class="flex items-center gap-2 cursor-pointer text-body-sm text-on-surface">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary" type="checkbox"/>
+<span>Ground floor bays (Max clearance)</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer text-body-sm text-on-surface">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary" type="checkbox"/>
+<span>Near elevator or lobby exits</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer text-body-sm text-on-surface">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary" type="checkbox"/>
+<span>Require Supercharger (EV only)</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer text-body-sm text-on-surface">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary" type="checkbox"/>
+<span>Allow automated valet maneuvering</span>
+</label>
+</div>
+</div>
+<div class="pt-space-xs flex items-center gap-space-sm">
+<button class="w-full py-3 rounded-full bg-secondary-container text-on-primary font-label-lg text-label-lg shadow-sm hover:brightness-105 active:scale-95 transition-all text-center" type="submit">
+              Update Preferences
+            </button>
+</div>
+<div class="hidden p-space-sm bg-primary-fixed text-primary font-label-sm text-label-sm rounded-lg text-center" id="save-toast">
+            Preferences saved and synced across slots!
+          </div>
+</form>
+</div>
+<!-- Garage Telematics Mini-Widget -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-[0_4px_20px_-2px_rgba(18,27,46,0.04)]">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-lg text-label-lg text-on-surface">Smart Park RFID Card</span>
+<span class="material-symbols-outlined text-primary text-base">contactless</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+          Linked to <strong>FastTag #SP-99201-IND</strong>. Automatic barrier lifting enabled at all Level-1 to Level-4 gates.
+        </p>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Barrier Auto-Pass</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">ONLINE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal: Add New Vehicle to Digital Garage -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-on-surface/40 backdrop-blur-xs hidden p-gutter" id="add-vehicle-modal">
+<div class="relative w-full max-w-lg bg-surface-container-lowest rounded-xl p-space-xl shadow-[0_24px_48px_-8px_rgba(15,61,110,0.18)]">
+<div class="flex items-center justify-between pb-space-sm mb-space-lg">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">New Garage Registration</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Add Vehicle</h2>
+</div>
+<button class="p-1 rounded-full hover:bg-surface-container-high text-on-surface-variant transition-colors" id="close-modal-btn">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); addNewVehicle();">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Make &amp; Model Name</label>
+<input class="w-full px-space-md py-2.5 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none" id="new-model" placeholder="e.g. BMW i4 Gran Coupe" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">License Plate</label>
+<input class="w-full px-space-md py-2.5 bg-surface-container-low rounded-xl text-on-surface font-label-lg text-label-lg uppercase focus:outline-none" id="new-plate" placeholder="MH 02 XY 1234" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Body Type</label>
+<select class="w-full px-space-md py-2.5 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none" id="new-type">
+<option>Sedan</option>
+<option>SUV / Crossover</option>
+<option>Hatchback</option>
+<option>Electric EV</option>
+<option>Two-Wheeler</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Color / Finish</label>
+<input class="w-full px-space-md py-2.5 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none" id="new-color" placeholder="e.g. Alpine White" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Height Clearance</label>
+<input class="w-full px-space-md py-2.5 bg-surface-container-low rounded-xl text-on-surface font-body-md text-body-md focus:outline-none" placeholder="1.85m" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Preferred Slot Features</label>
+<div class="grid grid-cols-2 gap-2 text-body-sm text-on-surface">
+<label class="flex items-center gap-2 p-2 bg-surface-container-low rounded-lg cursor-pointer">
+<input class="accent-primary" type="checkbox"/> EV Charger
+            </label>
+<label class="flex items-center gap-2 p-2 bg-surface-container-low rounded-lg cursor-pointer">
+<input checked="" class="accent-primary" type="checkbox"/> Ground Floor
+            </label>
+<label class="flex items-center gap-2 p-2 bg-surface-container-low rounded-lg cursor-pointer">
+<input checked="" class="accent-primary" type="checkbox"/> Wide Bay
+            </label>
+<label class="flex items-center gap-2 p-2 bg-surface-container-low rounded-lg cursor-pointer">
+<input class="accent-primary" type="checkbox"/> Valet Assist
+            </label>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-md mt-space-md pt-space-sm">
+<button class="px-space-md py-2.5 rounded-full text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" id="cancel-modal-btn" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary-container transition-all" type="submit">
+            Save to Garage
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Micro-Interactions Client Script -->
+<script>
+    function selectVehicle(model, plate, type, color, preference) {
+      const modelInput = document.getElementById('drawer-model');
+      const plateInput = document.getElementById('drawer-plate');
+      const typeInput = document.getElementById('drawer-type');
+      const colorInput = document.getElementById('drawer-color');
+      const detailsCard = document.getElementById('details-card');
+
+      if (modelInput && plateInput && typeInput && colorInput) {
+        modelInput.value = model;
+        plateInput.value = plate;
+        colorInput.value = color;
+
+        for (let i = 0; i < typeInput.options.length; i++) {
+          if (type.toLowerCase().includes(typeInput.options[i].text.toLowerCase())) {
+            typeInput.selectedIndex = i;
+            break;
+          }
+        }
+
+        // Tactile highlight pulse on quick inspector
+        detailsCard.classList.add('ring-2', 'ring-primary/40');
+        setTimeout(() => detailsCard.classList.remove('ring-2', 'ring-primary/40'), 700);
+      }
+    }
+
+    function setPrimary(modelName) {
+      alert(modelName + ' has been set as your Primary Vehicle for all auto-parking dispatch & gate access.');
+    }
+
+    function saveFeedback() {
+      const toast = document.getElementById('save-toast');
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2500);
+    }
+
+    // Modal Triggers
+    const modal = document.getElementById('add-vehicle-modal');
+    const openBtn = document.getElementById('open-add-modal-btn');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const cancelBtn = document.getElementById('cancel-modal-btn');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
+    }
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    }
+    if (cancelBtn && modal) {
+      cancelBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    }
+
+    function addNewVehicle() {
+      const model = document.getElementById('new-model').value;
+      modal.classList.add('hidden');
+      alert(model + ' was successfully added to your Digital Garage bays.');
+    }
+  </script>
+</div></main><footer class="w-full mt-space-xl bg-surface-container-low py-space-lg"><div class="max-w-7xl mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><img alt="SmartPark Logo" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WjDs9BLtk4bQsvRR3xAvHrXeAaoGux1xCnFdrEGMsSvibOKs9cFdQftcpJJijC4qOYrf9BQhWWkfrgL1fba8_CZroq70fUPwb93iWaabm-lPFiDPRKCd2bhPJiUJRGUzE2pbNpFTLrNWdU-2XYetNlmFYtm-hTDQye0vZHexQjgi42mjNGcVNvpGWx4ijPnPs0MOwmy8zCmMg2onZRFVCiSsgAUGrmhKnyBuABqZ_ecKhOX9RCzBAOOhs"/><span class="font-headline-sm text-headline-sm text-on-surface">SmartPark</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">© 2025 SmartPark Mobility Systems. Precision space allocation.</p><div class="flex items-center gap-space-md"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="privacy-terms" href="#">Privacy &amp; Terms</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="support" href="#">Support</a></div></div></footer></body></html>
