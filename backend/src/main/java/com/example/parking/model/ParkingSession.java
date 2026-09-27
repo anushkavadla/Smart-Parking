@@ -41,4 +41,19 @@ public class ParkingSession {
 
     @Column(nullable = false, length = 20)
     private String status;
+
+    // Simulated payment (college mini-project: no external gateway).
+    // Only method + generated reference + timestamp are stored —
+    // never card numbers, never CVV.
+    @Column(name = "payment_status", length = 20)
+    private String paymentStatus;
+
+    @Column(name = "payment_method", length = 20)
+    private String paymentMethod;
+
+    @Column(name = "payment_reference", length = 40)
+    private String paymentReference;
+
+    @Column(name = "paid_at")
+    private LocalDateTime paidAt;
 }

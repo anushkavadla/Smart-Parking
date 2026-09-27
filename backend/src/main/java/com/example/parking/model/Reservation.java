@@ -13,34 +13,41 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "parking_slots")
+@Table(name = "reservations")
 @Data
-public class ParkingSlot {
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String slotNumber;
+    @Column(nullable = false, unique = true, length = 20)
+    private String reference;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id", nullable = false)
+    private Vehicle vehicle;
+
+    @ManyToOne
+    @JoinColumn(name = "parking_slot_id", nullable = false)
+    private ParkingSlot parkingSlot;
+
+    @Column(name = "start_time", nullable = false)
+    private LocalDateTime startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private LocalDateTime endTime;
 
     @Column(nullable = false, length = 20)
     private String status;
-
-    @ManyToOne
-    @JoinColumn(name = "parking_lot_id", nullable = false)
-    private ParkingLot parkingLot;
-
-    @ManyToOne
-    @JoinColumn(name = "parking_level_id")
-    private ParkingLevel level;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-
-    @Column(length = 20)
-    private String size;
 }

@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import {
+  parkingLevelService,
   parkingLotService,
   parkingSessionService,
   parkingSlotService,
@@ -11,10 +12,17 @@ import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 import ErrorState from '../components/ErrorState';
 import LoadingState from '../components/LoadingState';
+import ParkingLevelSelector from '../components/ParkingLevelSelector';
 import SlotLegend from '../components/SlotLegend';
 import Stat from '../components/Stat';
 import { vehicleTitle } from '../components/VehicleCard';
 import { rateFor, slotFitsVehicle } from '../utils/parking';
+import {
+  getSlotLevel,
+  groupSlotsByLevel,
+  levelStats,
+  levelTag,
+} from '../utils/levels';
 
 const ParkingScene = lazy(() => import('../components/ParkingScene'));
 
@@ -33,6 +41,9 @@ export default function Home() {
   const [vehicleId, setVehicleId] = useState('');
   const [checkingIn, setCheckingIn] = useState(false);
   const [notice, setNotice] = useState('');
+  const [level, setLevel] = useState('P1');
+  const [levels, setLevels] = useState([]);
+  const [availability, setAvailability] = useState(null);
 
   async function load() {
     setError('');
@@ -53,12 +64,19 @@ export default function Home() {
           slotList.find(
             (s) => s.slotNumber === 'A06' && s.status === 'AVAILABLE',
           ) ?? slotList.find((s) => s.status === 'AVAILABLE');
-        if (demo) setSelectedId(demo.id);
+        if (demo) {
+          setSelectedId(demo.id);
+          setLevel(getSlotLevel(demo));
+        }
       }
       if (!vehicleId && vehList?.length) setVehicleId(String(vehList[0].id));
     } catch (err) {
       setError(err.message || 'Could not load dashboard.');
     }
+    // Real backend levels + authoritative availability; failures fall
+    // back to locally computed values so the page never breaks.
+    parkingLevelService.list().then(setLevels).catch(() => {});
+    parkingSlotService.availability().then(setAvailability).catch(() => {});
   }
 
   useEffect(() => {
@@ -70,8 +88,27 @@ export default function Home() {
     () => (lots ?? []).find((l) => l.id === LOT_ID) ?? lots?.[0],
     [lots],
   );
-  const available = (slots ?? []).filter((s) => s.status === 'AVAILABLE');
-  const occupied = (slots ?? []).filter((s) => s.status === 'OCCUPIED');
+  // Authoritative backend availability first, local computation fallback.
+  const localFacility = useMemo(() => levelStats(slots), [slots]);
+  const facility = availability ?? localFacility;
+  const grouped = useMemo(() => groupSlotsByLevel(slots), [slots]);
+  const levelSlots = grouped[level] ?? [];
+  const levelAvailable = levelSlots.filter((s) => s.status === 'AVAILABLE');
+  const levelCounts = useMemo(() => {
+    if (availability?.levels?.length) {
+      const out = {};
+      for (const lv of availability.levels) {
+        out[lv.levelCode] = { total: lv.total, occupied: lv.occupied };
+      }
+      return out;
+    }
+    const out = {};
+    for (const lv of ['P1', 'P2', 'P3']) {
+      const st = levelStats(grouped[lv]);
+      out[lv] = { total: st.total, occupied: st.occupied };
+    }
+    return out;
+  }, [availability, grouped]);
   const selected = (slots ?? []).find((s) => s.id === selectedId) ?? null;
   const chosenVehicle =
     (vehicles ?? []).find((v) => String(v.id) === String(vehicleId)) ?? null;
@@ -118,7 +155,7 @@ export default function Home() {
             Good day{user?.name ? `, ${user.name.split(' ')[0]}` : ''}.
           </h1>
           <p className="page-sub">
-            {lot?.name ?? 'AU Main Parking'}
+            {lot?.name ?? 'Smart Parking'}
             {lot ? ` · ${lot.location}` : ''} — select a bay in the 3D view
             and check in with one tap.
           </p>
@@ -139,27 +176,28 @@ export default function Home() {
 
       <div className="grid-4" style={{ marginBottom: 20 }}>
         <Stat
+          label="Total spaces"
+          value={facility.total}
+          hint="P1 · P2 · P3"
+          accent="blue"
+        />
+        <Stat
           label="Available"
-          value={available.length}
-          hint={`of ${slots.length} bays`}
+          value={facility.available}
+          hint={`of ${facility.total} bays`}
           accent="green"
         />
         <Stat
           label="Occupied"
-          value={occupied.length}
+          value={facility.occupied}
           hint="live from facility"
           accent="red"
         />
         <Stat
-          label="Car rate"
-          value="₹20/hr"
-          hint="2W ₹10 · Heavy ₹40"
-          accent="blue"
-        />
-        <Stat
-          label="Your vehicle"
-          value={chosenVehicle ? vehicleTitle(chosenVehicle) : '—'}
-          hint={chosenVehicle?.vehicleNumber ?? 'add one to begin'}
+          label="Reserved"
+          value={facility.reserved}
+          hint={session ? '1 active session' : 'no active session'}
+          accent="yellow"
         />
       </div>
 
@@ -222,9 +260,9 @@ export default function Home() {
                     value={selectedId ?? ''}
                     onChange={(e) => setSelectedId(Number(e.target.value))}
                   >
-                    {available.map((s) => (
+                    {levelAvailable.map((s) => (
                       <option key={s.id} value={s.id}>
-                        {s.slotNumber} · {s.size}
+                        {levelTag(s.slotNumber, level)} · {s.size}
                       </option>
                     ))}
                   </select>
@@ -264,24 +302,43 @@ export default function Home() {
         </div>
 
         <div className="scene-frame">
-          <div className="scene-tag">
-            <span className="badge badge-available">
-              {available.length} free
-            </span>
-            {session && (
-              <span className="badge badge-active">
-                Active · {session.parkingSlot?.slotNumber}
-              </span>
-            )}
-          </div>
-          <Suspense fallback={<LoadingState label="Preparing 3D view…" />}>
-            <ParkingScene
-              slots={slots}
-              selectedId={selectedId}
-              activeSlotId={session?.parkingSlot?.id ?? null}
-              onSelect={(s) => setSelectedId(s.id)}
+          <div className="scene-toolbar">
+            <ParkingLevelSelector
+              value={level}
+              onChange={setLevel}
+              stats={levelCounts}
+              levels={levels}
             />
-          </Suspense>
+            <div className="scene-tag">
+              <span className="badge badge-available">
+                {level} · {levelAvailable.length} free
+              </span>
+              {session && (
+                <span className="badge badge-active">
+                  Active ·{' '}
+                  {levelTag(
+                    session.parkingSlot?.slotNumber,
+                    getSlotLevel(session.parkingSlot),
+                  )}
+                </span>
+              )}
+            </div>
+          </div>
+          {levelSlots.length === 0 ? (
+            <p style={{ color: 'var(--ink-soft)', fontSize: 14, padding: '24px 0' }}>
+              No bays on {level} yet.
+            </p>
+          ) : (
+            <Suspense fallback={<LoadingState label="Preparing 3D view…" />}>
+              <ParkingScene
+                slots={levelSlots}
+                selectedId={selectedId}
+                activeSlotId={session?.parkingSlot?.id ?? null}
+                onSelect={(s) => setSelectedId(s.id)}
+                level={level}
+              />
+            </Suspense>
+          )}
           <div className="scene-hint">Drag to orbit · Scroll to zoom · Click a free bay</div>
         </div>
       </div>

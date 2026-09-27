@@ -26,17 +26,20 @@ public class ParkingSessionService {
     private final VehicleRepository vehicleRepository;
     private final ParkingSlotRepository parkingSlotRepository;
     private final UserRepository userRepository;
+    private final ReservationService reservationService;
 
     public ParkingSessionService(
             ParkingSessionRepository parkingSessionRepository,
             VehicleRepository vehicleRepository,
             ParkingSlotRepository parkingSlotRepository,
-            UserRepository userRepository) {
+            UserRepository userRepository,
+            ReservationService reservationService) {
 
         this.parkingSessionRepository = parkingSessionRepository;
         this.vehicleRepository = vehicleRepository;
         this.parkingSlotRepository = parkingSlotRepository;
         this.userRepository = userRepository;
+        this.reservationService = reservationService;
     }
 
     // =========================
@@ -80,8 +83,14 @@ public class ParkingSessionService {
 
         if (!"AVAILABLE".equals(slot.getStatus())) {
 
-            throw new RuntimeException(
-                    "Parking slot is not available");
+            if ("RESERVED".equals(slot.getStatus())) {
+                // The bay is held: only the owner of a live CONFIRMED
+                // reservation for this exact vehicle + bay may proceed.
+                reservationService.consumeForCheckIn(user, vehicle, slot);
+            } else {
+                throw new RuntimeException(
+                        "Parking slot is not available");
+            }
         }
 
         String requiredSize;
@@ -140,6 +149,7 @@ public class ParkingSessionService {
 
         session.setFee(BigDecimal.ZERO);
         session.setStatus("ACTIVE");
+        session.setPaymentStatus("PENDING");
 
         slot.setStatus("OCCUPIED");
         slot.setUpdatedAt(
@@ -163,7 +173,8 @@ public class ParkingSessionService {
     @Transactional
     public ParkingSession checkOut(
             Long sessionId,
-            String email) {
+            String email,
+            com.example.parking.dto.CheckoutRequest request) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
@@ -191,6 +202,27 @@ public class ParkingSessionService {
 
             throw new RuntimeException(
                     "Parking session is already completed");
+        }
+
+        // Payment is confirmed FIRST: any failure here leaves the
+        // session ACTIVE, the bay OCCUPIED and nothing half-written.
+        String method = request == null || request.getPaymentMethod() == null
+                ? null
+                : request.getPaymentMethod().trim().toUpperCase();
+
+        if (!"UPI".equals(method)
+                && !"CARD".equals(method)
+                && !"CASH".equals(method)) {
+            throw new RuntimeException(
+                    "Payment method is required (UPI, CARD or CASH)");
+        }
+
+        String reference = request.getPaymentReference() == null
+                ? null
+                : request.getPaymentReference().trim();
+
+        if (reference != null && !reference.matches("[A-Za-z0-9\\-]{1,40}")) {
+            throw new RuntimeException("Invalid payment reference");
         }
 
         LocalDateTime checkOutTime =
@@ -259,6 +291,11 @@ public class ParkingSessionService {
 
         session.setFee(fee);
         session.setStatus("COMPLETED");
+        session.setPaymentStatus("PAID");
+        session.setPaymentMethod(method);
+        session.setPaymentReference(
+                reference != null ? reference : newPaymentReference());
+        session.setPaidAt(checkOutTime);
 
         // =========================
         // FREE PARKING SLOT
@@ -269,6 +306,11 @@ public class ParkingSessionService {
 
         slot.setStatus("AVAILABLE");
         slot.setUpdatedAt(checkOutTime);
+
+        // Close the linked reservation hold, if the session started
+        // from one. Best-effort: never breaks the checkout flow.
+        reservationService.completeForSession(
+                session.getVehicle(), slot);
 
         // =========================
         // UPDATE PARKING LOT
@@ -286,6 +328,21 @@ public class ParkingSessionService {
         parkingSlotRepository.save(slot);
 
         return parkingSessionRepository.save(session);
+    }
+
+    private String newPaymentReference() {
+        for (int i = 0; i < 5; i++) {
+            String ref = "PAY-"
+                    + java.util.UUID.randomUUID().toString()
+                            .replace("-", "")
+                            .substring(0, 8)
+                            .toUpperCase();
+            if (parkingSessionRepository
+                    .findByPaymentReference(ref).isEmpty()) {
+                return ref;
+            }
+        }
+        throw new RuntimeException("Could not generate payment reference");
     }
 
     // =========================

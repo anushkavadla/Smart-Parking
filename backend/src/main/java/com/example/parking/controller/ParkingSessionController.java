@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.parking.dto.CheckoutRequest;
 import com.example.parking.dto.ParkingSessionRequest;
 import com.example.parking.model.ParkingSession;
 import com.example.parking.service.ParkingSessionService;
@@ -47,14 +48,13 @@ public class ParkingSessionController {
     @PostMapping("/{sessionId}/check-out")
     public ResponseEntity<ParkingSession> checkOut(
             @PathVariable Long sessionId,
+            @RequestBody(required = false) CheckoutRequest request,
             Authentication authentication) {
 
         String email = authentication.getName();
 
         ParkingSession session =
-                parkingSessionService.checkOut(
-                        sessionId,
-                        email);
+                parkingSessionService.checkOut(sessionId, email, request);
 
         return ResponseEntity.ok(session);
     }

@@ -46,6 +46,7 @@ public class AuthService {
         user.setPassword(
                 passwordEncoder.encode(request.getPassword())
         );
+        user.setRole("USER");
 
         LocalDateTime now = LocalDateTime.now();
         user.setCreatedAt(now);
@@ -58,6 +59,7 @@ public class AuthService {
         response.setId(savedUser.getId());
         response.setName(savedUser.getName());
         response.setEmail(savedUser.getEmail());
+        response.setRole(roleOf(savedUser));
 
         return response;
     }
@@ -86,8 +88,14 @@ public class AuthService {
         response.setId(user.getId());
         response.setName(user.getName());
         response.setEmail(user.getEmail());
+        response.setRole(roleOf(user));
         response.setToken(token);
 
         return response;
+    }
+
+    // Pre-role rows store NULL; they keep working as plain users.
+    private static String roleOf(User user) {
+        return user.getRole() == null ? "USER" : user.getRole().toUpperCase();
     }
 }
