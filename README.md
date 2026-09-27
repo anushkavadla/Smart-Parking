@@ -1,91 +1,368 @@
-# Smart Parking & Vehicle Management Platform
+\# Smart Parking \& Vehicle Management Platform
 
-A full-stack web application for managing parking lots, parking levels, parking slots, vehicles, parking sessions, reservations, parking fees, and checkout payments.
 
-The system is designed as a scalable parking management platform that can be adapted for different parking facilities such as commercial buildings, offices, apartments, hospitals, malls, and other parking environments.
 
----
+A full-stack Smart Parking and Vehicle Management Platform designed to simplify parking operations through digital parking-slot management, vehicle tracking, live parking status, checkout and payment processing, parking history, and an interactive 3D parking visualization.
 
-## Project Overview
 
-Managing parking spaces manually can make it difficult to track available slots, vehicles, parking sessions, and parking fees.
 
-The **Smart Parking & Vehicle Management Platform** provides a centralized web-based system where users can:
+The system provides a centralized platform for managing parking levels, parking slots, vehicles, users, active parking sessions, reservations, and parking payments.
 
-- Register and manage their vehicles
-- View available parking slots
-- Select parking levels
-- Find suitable parking slots based on vehicle type
-- Check vehicles into parking slots
-- Track active parking sessions
-- Calculate parking fees based on parking duration
-- Reserve parking slots
-- Complete checkout with payment
-- View parking history
 
-The system also provides administrative functionality for managing parking levels, parking slots, and parking slot status.
 
----
+\---
 
-## Main Objectives
 
-- Automate parking slot management
-- Reduce manual parking management
-- Provide parking availability information
-- Support multiple parking levels
-- Manage different vehicle types and slot sizes
-- Track vehicle check-in and check-out
-- Calculate parking fees automatically
-- Maintain parking history
-- Provide role-based access for users and administrators
-- Demonstrate full-stack development using Java, Spring Boot, Maven, React, and MySQL
 
----
+\## 📌 Project Overview
 
-# Features
 
-## 1. User Authentication
 
-The system provides secure user authentication using JWT.
+Managing parking spaces manually can make it difficult to track available slots, parked vehicles, parking duration, and parking charges.
 
-Features include:
 
-- User registration
-- User login
-- JWT-based authentication
-- Password encryption using BCrypt
-- Role-based access control
-- Protected API endpoints
 
----
+The Smart Parking \& Vehicle Management Platform addresses these challenges by providing a web-based system where users can:
 
-## 2. Vehicle Management
 
-Users can manage their registered vehicles.
 
-Features include:
+\- Register and log in
 
-- Add vehicles
-- View vehicles
-- Update vehicle details
-- Delete vehicles
-- Manage multiple vehicles
+\- Manage their vehicles
 
-### Supported Vehicle Types
+\- View parking levels and available slots
 
-| Vehicle Type | Parking Slot Size |
-|--------------|-------------------|
-| Two Wheeler | SMALL |
-| Car | MEDIUM |
-| Heavy Vehicle | LARGE |
+\- Select parking slots based on vehicle type
 
----
+\- Check vehicles in
 
-## 3. Parking Level Management
+\- Track active parking sessions
 
-The parking facility supports multiple parking levels:
+\- View live parking duration and estimated fees
+
+\- Check out and complete payment
+
+\- View parking history
+
+\- View parking status through an interactive 3D parking layout
+
+
+
+The platform also provides backend APIs for managing parking levels, slots, vehicles, users, reservations, and parking sessions.
+
+
+
+\---
+
+
+
+\## 🚀 Features
+
+
+
+\### User Management
+
+\- User registration and login
+
+\- User profile management
+
+\- User role management
+
+\- Authentication and authorization
+
+\- User-specific active parking sessions
+
+
+
+\### Vehicle Management
+
+\- Add vehicles
+
+\- Update vehicle information
+
+\- Delete vehicles
+
+\- View registered vehicles
+
+\- Vehicle type validation
+
+\- Vehicle-to-parking-slot compatibility
+
+
+
+\### Parking Level Management
+
+\- Multiple parking levels
+
+\- Level-wise parking capacity
+
+\- Level-wise occupied and available slot counts
+
+\- Parking level selection
+
+\- Dynamic parking availability
+
+
+
+\### Parking Slot Management
+
+\- SMALL slots for two-wheelers
+
+\- MEDIUM slots for cars
+
+\- LARGE slots for heavy vehicles
+
+\- Slot availability tracking
+
+\- Occupied / Available / Reserved / Out-of-Service states
+
+\- Vehicle-compatible slot selection
+
+
+
+\### Parking Session Management
+
+\- Vehicle check-in
+
+\- Active parking session tracking
+
+\- Check-in timestamp
+
+\- Parking duration calculation
+
+\- Estimated parking fee
+
+\- Vehicle check-out
+
+\- Automatic slot release after checkout
+
+
+
+\### Payment \& Checkout
+
+\- Checkout flow with payment selection
+
+\- UPI payment simulation
+
+\- Card payment simulation
+
+\- Cash payment option
+
+\- Payment validation
+
+\- Payment reference generation
+
+\- Payment status tracking
+
+\- Checkout receipt
+
+\- Paid timestamp
+
+\- Payment history
+
+
+
+\### Parking History
+
+\- Completed parking sessions
+
+\- Vehicle details
+
+\- Parking level
+
+\- Parking slot
+
+\- Check-in time
+
+\- Check-out time
+
+\- Parking duration
+
+\- Parking rate
+
+\- Parking fee
+
+\- Payment method
+
+\- Payment status
+
+\- Payment reference
+
+
+
+\### Reservation
+
+\- Parking reservation backend support
+
+\- Reservation creation
+
+\- Reservation management
+
+\- Reservation status tracking
+
+
+
+\### Interactive 3D Parking Visualization
+
+\- Interactive 3D parking layout
+
+\- Multiple parking levels
+
+\- Visual parking-slot states
+
+\- Available slots
+
+\- Occupied slots
+
+\- Selected slots
+
+\- User's active slot
+
+\- Reserved slots
+
+\- Out-of-service slots
+
+\- Vehicle visualization inside occupied slots
+
+\- Orbit and zoom interaction
+
+
+
+\---
+
+
+
+\## 🛠️ Technology Stack
+
+
+
+\### Frontend
+
+\- React
+
+\- Vite
+
+\- JavaScript
+
+\- HTML5
+
+\- CSS3
+
+\- React Three Fiber / Three.js
+
+\- Local Storage
+
+
+
+\### Backend
+
+\- Java 17
+
+\- Spring Boot
+
+\- Spring Boot Maven
+
+\- Spring Web
+
+\- Spring Data JPA
+
+\- Thymeleaf
+
+\- Lombok
+
+\- Spring DevTools
+
+
+
+\### Database
+
+\- MySQL
+
+
+
+\### Development Tools
+
+\- Visual Studio Code
+
+\- IntelliJ IDEA / Spring Tooling
+
+\- MySQL
+
+\- Git
+
+\- GitHub
+
+\- Postman / Thunder Client
+
+
+
+\---
+
+
+
+\## 🏗️ System Architecture
+
+
 
 ```text
-P1
-P2
-P3
+
+&#x20;                  ┌─────────────────────┐
+
+&#x20;                  │      User           │
+
+&#x20;                  └──────────┬──────────┘
+
+&#x20;                             │
+
+&#x20;                             ▼
+
+&#x20;                  ┌─────────────────────┐
+
+&#x20;                  │   React Frontend   │
+
+&#x20;                  │      + Vite         │
+
+&#x20;                  └──────────┬──────────┘
+
+&#x20;                             │
+
+&#x20;                        REST APIs
+
+&#x20;                             │
+
+&#x20;                             ▼
+
+&#x20;                  ┌─────────────────────┐
+
+&#x20;                  │   Spring Boot      │
+
+&#x20;                  │      Backend        │
+
+&#x20;                  └──────────┬──────────┘
+
+&#x20;                             │
+
+&#x20;             ┌───────────────┼────────────────┐
+
+&#x20;             │               │                │
+
+&#x20;             ▼               ▼                ▼
+
+&#x20;      ┌────────────┐  ┌────────────┐  ┌────────────┐
+
+&#x20;      │ Controllers│  │  Services  │  │Repositories│
+
+&#x20;      └────────────┘  └────────────┘  └─────┬──────┘
+
+&#x20;                                             │
+
+&#x20;                                             ▼
+
+&#x20;                                     ┌──────────────┐
+
+&#x20;                                     │    MySQL     │
+
+&#x20;                                     │   Database   │
+
+&#x20;                                     └──────────────┘
+
