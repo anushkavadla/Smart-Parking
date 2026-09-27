@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth/AuthContext';
 import {
+  parkingLevelService,
   parkingSessionService,
   parkingSlotService,
 } from '../api/services';
@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import EmptyState from '../components/EmptyState';
 import ErrorState from '../components/ErrorState';
 import LoadingState from '../components/LoadingState';
+import ParkingLevelSelector from '../components/ParkingLevelSelector';
 import { vehicleTitle } from '../components/VehicleCard';
 import {
   estimateFee,
@@ -17,29 +18,58 @@ import {
   inr,
   rateFor,
 } from '../utils/parking';
+import {
+  getSlotLevel,
+  groupSlotsByLevel,
+  levelStats,
+  levelTag,
+} from '../utils/levels';
 
 const ParkingScene = lazy(() => import('../components/ParkingScene'));
 
 export default function ActiveParking() {
-  const { activeSession } = useAuth();
   const navigate = useNavigate();
 
-  const [session, setSession] = useState(null);
+  const [actives, setActives] = useState(null);
+  const [chosenId, setChosenId] = useState(null);
   const [slots, setSlots] = useState(null);
   const [error, setError] = useState('');
   const [now, setNow] = useState(() => Date.now());
-  const [checkingOut, setCheckingOut] = useState(false);
-  const [notice, setNotice] = useState('');
+  const [level, setLevel] = useState(null);
+  const [levels, setLevels] = useState([]);
+
+  async function loadSlotsFor(active) {
+    const lotId = active.parkingSlot?.parkingLot?.id ?? 1;
+    const slotList = await parkingSlotService.byLot(lotId);
+    setSlots(slotList);
+    // Open the 3D view on the bay's real backend level.
+    setLevel(getSlotLevel(active.parkingSlot));
+  }
 
   async function load() {
     setError('');
     try {
-      const active = await activeSession();
-      setSession(active);
-      if (active) {
-        const lotId = active.parkingSlot?.parkingLot?.id ?? 1;
-        setSlots(await parkingSlotService.byLot(lotId));
+      const history = await parkingSessionService.history();
+      const live = (history ?? []).filter((s) => s.status === 'ACTIVE');
+      setActives(live);
+      const first = live[0] ?? null;
+      if (first) {
+        setChosenId((prev) => prev ?? first.id);
+        await loadSlotsFor(live.find((s) => s.id === chosenId) ?? first);
       }
+    } catch (err) {
+      setError(err.message || 'Could not load live session.');
+    }
+    parkingLevelService.list().then(setLevels).catch(() => {});
+  }
+
+  async function switchSession(id) {
+    const next = (actives ?? []).find((s) => String(s.id) === String(id));
+    if (!next) return;
+    setChosenId(next.id);
+    setSlots(null);
+    try {
+      await loadSlotsFor(next);
     } catch (err) {
       setError(err.message || 'Could not load live session.');
     }
@@ -49,6 +79,10 @@ export default function ActiveParking() {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Derived before any hook/effect below touches it (TDZ-safe order).
+  const session =
+    (actives ?? []).find((s) => String(s.id) === String(chosenId)) ?? actives?.[0] ?? null;
 
   useEffect(() => {
     if (!session) return;
@@ -64,18 +98,21 @@ export default function ActiveParking() {
     [session, now],
   );
 
-  async function checkOut() {
-    if (!session) return;
-    setCheckingOut(true);
-    setNotice('');
-    try {
-      const done = await parkingSessionService.checkOut(session.id);
-      navigate(`/checkout/${done.id}`, { state: { receipt: done } });
-    } catch (err) {
-      setNotice(err.message || 'Checkout failed.');
-    } finally {
-      setCheckingOut(false);
+  // Hooks stay above the early returns below (Rules of Hooks).
+  const grouped = useMemo(() => groupSlotsByLevel(slots), [slots]);
+  const levelCounts = useMemo(() => {
+    const out = {};
+    for (const lv of ['P1', 'P2', 'P3']) {
+      const st = levelStats(grouped[lv]);
+      out[lv] = { total: st.total, occupied: st.occupied };
     }
+    return out;
+  }, [grouped]);
+
+  // Checkout always routes through the payment screen: nothing is
+  // completed until a payment method is confirmed there.
+  function goCheckout() {
+    if (session) navigate(`/checkout/${session.id}`);
   }
 
   if (error) {
@@ -85,7 +122,7 @@ export default function ActiveParking() {
       </div>
     );
   }
-  if (session === null && slots === null) {
+  if (actives === null) {
     return (
       <div className="page">
         <LoadingState label="Checking live session…" />
@@ -115,15 +152,21 @@ export default function ActiveParking() {
 
   const v = session.vehicle ?? {};
   const slot = session.parkingSlot ?? {};
+  const viewLevel = level ?? 'P1';
+  const levelSlots = grouped[viewLevel] ?? [];
+  const slotLevel = getSlotLevel(slot);
 
   return (
     <div className="page">
       <div className="page-head">
         <div>
-          <p className="eyebrow">Live session · Bay {slot.slotNumber}</p>
+          <p className="eyebrow">
+            Live session · {slotLevel} · Bay {slot.slotNumber}
+          </p>
           <h1 className="page-title">{vehicleTitle(v)}</h1>
           <p className="page-sub mono">
-            {v.vehicleNumber} · {slot.parkingLot?.name} · Bay {slot.slotNumber}
+            {v.vehicleNumber} · {slot.parkingLot?.name ?? 'Smart Parking'} ·{' '}
+            {levelTag(slot.slotNumber, slotLevel)}
           </p>
         </div>
         <span className="badge badge-active">Active</span>
@@ -151,25 +194,55 @@ export default function ActiveParking() {
               </dd>
             </div>
           </dl>
-          {notice && <div className="form-error" style={{ marginTop: 12 }}>{notice}</div>}
+          {(actives ?? []).length > 1 && (
+            <div className="field" style={{ marginTop: 16, textAlign: 'left' }}>
+              <label className="field-label" htmlFor="active-switch">
+                Active session ({actives.length})
+              </label>
+              <select
+                id="active-switch"
+                className="select"
+                value={session.id}
+                onChange={(e) => switchSession(e.target.value)}
+              >
+                {(actives ?? []).map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {vehicleTitle(s.vehicle)} ·{' '}
+                    {levelTag(s.parkingSlot?.slotNumber, getSlotLevel(s.parkingSlot))}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-            <Button block size="lg" loading={checkingOut} onClick={checkOut}>
-              Check out
+            <Button block size="lg" onClick={goCheckout}>
+              Check out · pay
             </Button>
           </div>
         </div>
 
         <div className="scene-frame">
-          <div className="scene-tag">
-            <span className="badge badge-active">Your bay · {slot.slotNumber}</span>
+          <div className="scene-toolbar">
+            <ParkingLevelSelector
+              value={viewLevel}
+              onChange={setLevel}
+              stats={levelCounts}
+              levels={levels}
+            />
+            <div className="scene-tag">
+              <span className="badge badge-active">
+                Your bay · {levelTag(slot.slotNumber, slotLevel)}
+              </span>
+            </div>
           </div>
           {slots && (
             <Suspense fallback={<LoadingState label="Preparing 3D view…" />}>
               <ParkingScene
-                slots={slots}
+                slots={levelSlots}
                 selectedId={null}
                 activeSlotId={slot.id}
                 onSelect={() => {}}
+                level={viewLevel}
               />
             </Suspense>
           )}

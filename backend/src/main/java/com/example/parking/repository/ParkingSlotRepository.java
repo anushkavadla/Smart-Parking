@@ -19,4 +19,14 @@ public interface ParkingSlotRepository
     Optional<ParkingSlot> findBySlotNumberAndParkingLotId(
             String slotNumber,
             Long parkingLotId);
+
+    List<ParkingSlot> findByLevelId(Long levelId);
+
+    List<ParkingSlot> findByLevelLevelCode(String levelCode);
+
+    List<ParkingSlot> findByLevelLevelCodeAndStatus(
+            String levelCode,
+            String status);
+
+    List<ParkingSlot> findByStatus(String status);
 }

@@ -10,6 +10,7 @@ import {
   formatDuration,
   inr,
 } from '../utils/parking';
+import { levelTag } from '../utils/levels';
 
 export default function History() {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ export default function History() {
             title={sessions.length === 0 ? 'No sessions yet' : 'No matches'}
             hint={
               sessions.length === 0
-                ? 'Check in to AU Main Parking to start your history.'
+                ? 'Check in to Smart Parking to start your history.'
                 : 'Try a different search or status filter.'
             }
             action={
@@ -136,6 +137,7 @@ export default function History() {
                 <th>Check-in</th>
                 <th>Duration</th>
                 <th>Fee</th>
+                <th>Payment</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -150,10 +152,13 @@ export default function History() {
                     </span>
                   </td>
                   <td>
-                    {s.parkingSlot?.parkingLot?.name}
+                    {s.parkingSlot?.parkingLot?.name ?? 'Smart Parking'}
                     <br />
                     <span className="mono" style={{ fontSize: 13 }}>
-                      {s.parkingSlot?.slotNumber}
+                      {levelTag(
+                        s.parkingSlot?.slotNumber,
+                        s.parkingSlot?.level?.levelCode ?? null,
+                      )}
                     </span>
                   </td>
                   <td>{formatDateTime(s.checkInTime)}</td>
@@ -161,6 +166,26 @@ export default function History() {
                     {formatDuration(s.checkInTime, s.checkOutTime)}
                   </td>
                   <td className="mono">{inr(s.fee)}</td>
+                  <td style={{ fontSize: 13 }}>
+                    {s.paymentMethod ? (
+                      <>
+                        <strong>{s.paymentMethod}</strong>
+                        <br />
+                        <span
+                          className={`badge ${
+                            String(s.paymentStatus ?? '').toUpperCase() === 'PAID'
+                              ? 'badge-paid'
+                              : 'badge-pending'
+                          }`}
+                          style={{ marginTop: 4 }}
+                        >
+                          {s.paymentStatus ?? '—'}
+                        </span>
+                      </>
+                    ) : (
+                      <span style={{ color: 'var(--ink-faint)' }}>—</span>
+                    )}
+                  </td>
                   <td>
                     <span
                       className={`badge ${

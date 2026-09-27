@@ -31,6 +31,10 @@ public class ParkingSlot {
     @JoinColumn(name = "parking_lot_id", nullable = false)
     private ParkingLot parkingLot;
 
+    @ManyToOne
+    @JoinColumn(name = "parking_level_id")
+    private ParkingLevel level;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

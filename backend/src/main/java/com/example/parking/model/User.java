@@ -33,6 +33,10 @@ public class User {
     @Column(length = 15)
     private String phone;
 
+    // Nullable so pre-existing rows keep working; null means USER.
+    @Column(length = 20)
+    private String role;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

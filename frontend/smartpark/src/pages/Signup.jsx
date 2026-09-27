@@ -54,7 +54,7 @@ export default function Signup() {
           </p>
           <h2>Your bay is waiting.</h2>
           <p>
-            Create an account, register your vehicle and check in to AU Main
+            Create an account, register your vehicle and check in to Smart
             Parking in under a minute.
           </p>
         </div>
@@ -78,7 +78,7 @@ export default function Signup() {
           <p className="eyebrow">Get started</p>
           <h1 className="page-title">Create account</h1>
           <p className="page-sub" style={{ marginBottom: 22 }}>
-            Join SmartPark to park smarter on campus.
+            Join SmartPark to park smarter on every level.
           </p>
           <form onSubmit={onSubmit} noValidate>
             {formError && <div className="form-error">{formError}</div>}

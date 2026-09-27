@@ -52,13 +52,13 @@ export default function Login() {
           <h2>Parking that feels effortless.</h2>
           <p>
             Live availability, instant check-in and transparent per-hour
-            pricing across your campus parking facilities.
+            pricing across every parking level.
           </p>
         </div>
         <div className="auth-brand-points">
           <div className="auth-point">
             <span className="auth-point-mark">◉</span>
-            Real-time slot map of AU Main Parking with 3D visualization.
+            Real-time multi-level slot map with 3D visualization.
           </div>
           <div className="auth-point">
             <span className="auth-point-mark">◉</span>

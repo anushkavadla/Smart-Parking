@@ -53,7 +53,13 @@
   --red-soft: #f8e1e1;
   --red-ink: #a02c2c;
 
-  --nav-bg: rgb(255 255 255 / 0.86);
+  --yellow: #ca8a04;
+  --yellow-soft: #faf0d2;
+  --yellow-ink: #8a5f06;
+
+  --nav-bg: rgba(22, 33, 58, 0.86);
+  --nav-ink: #eef1f7;
+  --nav-ink-soft: #aeb8cf;
   --overlay: rgb(22 33 58 / 0.45);
   --scene-frame: #e9e6dc;
 }
@@ -86,7 +92,13 @@
   --red-soft: #4d1f24;
   --red-ink: #f4a3a3;
 
+  --yellow: #facc15;
+  --yellow-soft: #3d3209;
+  --yellow-ink: #fde68a;
+
   --nav-bg: rgb(14 19 32 / 0.82);
+  --nav-ink: #eef1f7;
+  --nav-ink-soft: #aeb8cf;
   --overlay: rgb(4 7 14 / 0.6);
   --scene-frame: #1b2338;
 }
@@ -244,7 +256,7 @@ button {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 18px;
-  color: var(--ink);
+  color: var(--nav-ink);
   letter-spacing: -0.01em;
 }
 
@@ -267,7 +279,7 @@ button {
 
 [data-theme='dark'] .brand-mark {
   background: var(--blue);
-  color: #0a0f1e;
+  color: #fff;
 }
 
 .nav-links {
@@ -282,25 +294,25 @@ button {
   border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: var(--nav-ink-soft);
   transition: background var(--dur-fast) var(--ease),
     color var(--dur-fast) var(--ease);
 }
 
 .nav-link:hover {
   text-decoration: none;
-  background: var(--surface-2);
-  color: var(--ink);
-}
-
-.nav-link.active {
-  background: var(--navy);
+  background: rgb(255 255 255 / 0.12);
   color: #fff;
 }
 
-[data-theme='dark'] .nav-link.active {
-  background: var(--blue-soft);
-  color: var(--blue-ink);
+.nav-link.active {
+  background: var(--blue);
+  color: #fff;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .nav-spacer {
@@ -313,7 +325,16 @@ button {
   gap: 10px;
   font-size: 14px;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: var(--nav-ink-soft);
+}
+
+.topnav .btn-ghost {
+  color: var(--nav-ink-soft);
+}
+
+.topnav .btn-ghost:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.12);
+  color: #fff;
 }
 
 .avatar {
@@ -414,8 +435,13 @@ button {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  border-color: var(--ink-faint);
+  border-color: var(--blue);
   transform: translateY(-1px);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
 }
 
 .btn-ghost {
@@ -564,6 +590,9 @@ button {
 .stat-accent-orange .stat-value {
   color: var(--orange-ink);
 }
+.stat-accent-yellow .stat-value {
+  color: var(--yellow-ink);
+}
 
 /* ---------- badges / pills ---------- */
 
@@ -603,14 +632,39 @@ button {
   background: var(--orange-soft);
   color: var(--orange-ink);
 }
+.badge-reserved {
+  background: var(--yellow-soft);
+  color: var(--yellow-ink);
+}
 .badge-muted {
   background: var(--surface-2);
   color: var(--ink-soft);
+}
+.badge-paid {
+  background: var(--green-soft);
+  color: var(--green-ink);
+}
+.badge-pending {
+  background: var(--yellow-soft);
+  color: var(--yellow-ink);
+}
+.badge-failed {
+  background: var(--red-soft);
+  color: var(--red-ink);
 }
 .badge-completed {
   background: var(--surface-2);
   color: var(--ink-soft);
 }
+
+/* ---------- active navigation pill ---------- */
+
+.nav-link.active {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* Inactive nav links get subtle styling via var() below */
 
 /* ---------- forms ---------- */
 
@@ -807,14 +861,24 @@ button {
   cursor: grabbing;
 }
 
+.scene-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  padding: 12px 14px 0;
+}
+
+.scene-toolbar .level-seg {
+  margin: 0;
+}
+
 .scene-tag {
-  position: absolute;
-  top: 14px;
-  left: 14px;
   display: flex;
   gap: 8px;
   align-items: center;
-  z-index: 5;
+  flex-wrap: wrap;
 }
 
 .scene-hint {
@@ -824,7 +888,7 @@ button {
   transform: translateX(-50%);
   font-size: 12px;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: #eef1f7;
   background: var(--nav-bg);
   backdrop-filter: blur(8px);
   border: 1px solid var(--line);
@@ -932,6 +996,149 @@ button {
   border-color: var(--orange);
   background: var(--orange-soft);
   color: var(--orange-ink);
+}
+
+.slot-chip.reserved {
+  background: var(--yellow-soft);
+  color: var(--yellow-ink);
+  border-color: var(--line);
+  cursor: not-allowed;
+}
+
+.slot-chip.oos {
+  background: var(--surface-2);
+  color: var(--ink-faint);
+  border-color: var(--line);
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+/* ---------- parking level selector ---------- */
+
+.level-seg {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 2px 0 12px;
+}
+
+.level-seg-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.level-seg-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.level-seg-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  min-width: 92px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.level-seg-btn strong {
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+.level-seg-btn small {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.level-seg-btn:hover {
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.level-seg-btn.active {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+  color: var(--blue-ink);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+.level-seg-btn.active small {
+  color: var(--blue-ink);
+}
+
+/* ---------- payment method picker ---------- */
+
+.pay-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.pay-method {
+  border: 1.5px solid var(--line-strong);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--ink);
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.pay-method:hover {
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.pay-method.active {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+  color: var(--blue-ink);
+  box-shadow: 0 0 0 3px var(--blue-soft);
+}
+
+.pay-method strong {
+  display: block;
+  font-size: 14px;
+}
+
+.pay-method small {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+.pay-method.active small {
+  color: var(--blue-ink);
+}
+
+.pay-secure-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 14px;
 }
 
 /* ---------- lists / tables ---------- */
@@ -1192,8 +1399,21 @@ table.data tbody tr:hover {
   .auth-brand {
     display: none;
   }
+  .topnav-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 16px;
+    row-gap: 8px;
+  }
   .nav-links {
-    display: none;
+    order: 3;
+    flex-basis: 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .nav-link {
+    white-space: nowrap;
   }
   .scene-canvas {
     height: 340px;
@@ -1204,6 +1424,12 @@ table.data tbody tr:hover {
 }
 
 @media (max-width: 600px) {
+  .pay-methods {
+    grid-template-columns: 1fr;
+  }
+  .scene-toolbar {
+    padding: 10px 10px 0;
+  }
   .page {
     padding: 20px 16px 56px;
   }

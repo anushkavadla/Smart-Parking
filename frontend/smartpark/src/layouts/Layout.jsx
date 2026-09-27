@@ -9,7 +9,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <footer className="footer">
-        SmartPark · Premium parking & vehicle management · AU Main Parking
+        SmartPark · Premium parking & vehicle management · Smart Parking System
       </footer>
     </div>
   );

@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 import {
+  parkingLevelService,
   parkingLotService,
   parkingSessionService,
   parkingSlotService,
@@ -10,9 +11,18 @@ import {
 import Button from '../components/Button';
 import ErrorState from '../components/ErrorState';
 import LoadingState from '../components/LoadingState';
+import ParkingLevelSelector from '../components/ParkingLevelSelector';
 import SlotLegend, { slotColor } from '../components/SlotLegend';
 import { vehicleTitle } from '../components/VehicleCard';
 import { rateFor, slotFitsVehicle } from '../utils/parking';
+import {
+  findCompatibleBay,
+  getSlotLevel,
+  groupSlotsByLevel,
+  levelStats,
+  levelTag,
+  normalizeStatus,
+} from '../utils/levels';
 
 const ParkingScene = lazy(() => import('../components/ParkingScene'));
 
@@ -36,6 +46,10 @@ export default function Parking() {
   const [vehicleId, setVehicleId] = useState('');
   const [checkingIn, setCheckingIn] = useState(false);
   const [notice, setNotice] = useState('');
+  const [level, setLevel] = useState('P1');
+  const [prefLevel, setPrefLevel] = useState('ANY');
+  const [levels, setLevels] = useState([]);
+  const [availability, setAvailability] = useState(null);
 
   async function load() {
     setError('');
@@ -55,12 +69,17 @@ export default function Parking() {
           slotList.find(
             (s) => s.slotNumber === 'A06' && s.status === 'AVAILABLE',
           ) ?? slotList.find((s) => s.status === 'AVAILABLE');
-        if (demo) setSelectedId(demo.id);
+        if (demo) {
+          setSelectedId(demo.id);
+          setLevel(getSlotLevel(demo));
+        }
       }
       if (!vehicleId && vehList?.length) setVehicleId(String(vehList[0].id));
     } catch (err) {
       setError(err.message || 'Could not load parking map.');
     }
+    parkingLevelService.list().then(setLevels).catch(() => {});
+    parkingSlotService.availability().then(setAvailability).catch(() => {});
   }
 
   useEffect(() => {
@@ -81,6 +100,55 @@ export default function Parking() {
       ? slotFitsVehicle(selected.size, chosenVehicle.vehicleType)
       : true;
   const available = (slots ?? []).filter((s) => s.status === 'AVAILABLE');
+  const grouped = useMemo(() => groupSlotsByLevel(slots), [slots]);
+  const levelSlots = grouped[level] ?? [];
+  const levelAvailable = levelSlots.filter((s) => s.status === 'AVAILABLE');
+  const levelCounts = useMemo(() => {
+    if (availability?.levels?.length) {
+      const out = {};
+      for (const lv of availability.levels) {
+        out[lv.levelCode] = { total: lv.total, occupied: lv.occupied };
+      }
+      return out;
+    }
+    const out = {};
+    for (const lv of ['P1', 'P2', 'P3']) {
+      const st = levelStats(grouped[lv]);
+      out[lv] = { total: st.total, occupied: st.occupied };
+    }
+    return out;
+  }, [availability, grouped]);
+
+  // Server-validated compatible-bay search; the local mirror runs only
+  // if the request fails, and check-in is always re-validated by the
+  // server, so the frontend can never approve an invalid bay alone.
+  async function findParking() {
+    setNotice('');
+    const applyHit = (slot) => {
+      const lv = getSlotLevel(slot);
+      setLevel(lv);
+      setSelectedId(slot.id);
+      setNotice(`Best bay: ${levelTag(slot.slotNumber, lv)} (${slot.size}).`);
+    };
+    try {
+      const slot = await parkingSlotService.find(
+        chosenVehicle?.vehicleType,
+        prefLevel,
+      );
+      if (slot?.id) {
+        applyHit(slot);
+        return;
+      }
+      throw new Error('Compatible parking slot not found');
+    } catch (err) {
+      const hit = findCompatibleBay(grouped, chosenVehicle?.vehicleType, prefLevel);
+      if (!hit) {
+        setNotice(err?.message || 'No compatible bay available. Try another level.');
+        return;
+      }
+      applyHit(hit.slot);
+    }
+  }
 
   async function checkIn() {
     if (!chosenVehicle || !selected) return;
@@ -118,7 +186,7 @@ export default function Parking() {
       <div className="page-head">
         <div>
           <p className="eyebrow">Facility · Live map</p>
-          <h1 className="page-title">{lot?.name ?? 'AU Main Parking'}</h1>
+          <h1 className="page-title">{lot?.name ?? 'Smart Parking'}</h1>
           <p className="page-sub">
             {lot?.location} · {available.length} of {slots.length} bays free ·
             Small fits {SIZE_VEHICLE.SMALL}, medium fits {SIZE_VEHICLE.MEDIUM},
@@ -130,26 +198,47 @@ export default function Parking() {
 
       <div className="grid-2" style={{ alignItems: 'start' }}>
         <div className="scene-frame">
-          <div className="scene-tag">
-            <span className="badge badge-available">{available.length} free</span>
-            {session && (
-              <span className="badge badge-active">
-                Active · {session.parkingSlot?.slotNumber}
-              </span>
-            )}
-          </div>
-          <Suspense fallback={<LoadingState label="Preparing 3D view…" />}>
-            <ParkingScene
-              slots={slots}
-              selectedId={selectedId}
-              activeSlotId={session?.parkingSlot?.id ?? null}
-              onSelect={(s) => {
-                setSelectedId(s.id);
-                setNotice('');
-              }}
-              height={520}
+          <div className="scene-toolbar">
+            <ParkingLevelSelector
+              value={level}
+              onChange={setLevel}
+              stats={levelCounts}
+              levels={levels}
             />
-          </Suspense>
+            <div className="scene-tag">
+              <span className="badge badge-available">
+                {level} · {levelAvailable.length} free
+              </span>
+              {session && (
+                <span className="badge badge-active">
+                  Active ·{' '}
+                  {levelTag(
+                    session.parkingSlot?.slotNumber,
+                    getSlotLevel(session.parkingSlot),
+                  )}
+                </span>
+              )}
+            </div>
+          </div>
+          {levelSlots.length === 0 ? (
+            <p style={{ color: 'var(--ink-soft)', fontSize: 14, padding: '24px 0' }}>
+              No bays on {level} yet.
+            </p>
+          ) : (
+            <Suspense fallback={<LoadingState label="Preparing 3D view…" />}>
+              <ParkingScene
+                slots={levelSlots}
+                selectedId={selectedId}
+                activeSlotId={session?.parkingSlot?.id ?? null}
+                onSelect={(s) => {
+                  setSelectedId(s.id);
+                  setNotice('');
+                }}
+                height={520}
+                level={level}
+              />
+            </Suspense>
+          )}
           <div className="scene-hint">Drag to orbit · Scroll to zoom · Click a free bay</div>
         </div>
 
@@ -157,7 +246,9 @@ export default function Parking() {
           <div className="card card-pad">
             <p className="eyebrow">Bay selection</p>
             <h2 style={{ fontSize: 22, marginBottom: 12 }}>
-              {selected ? `Bay ${selected.slotNumber}` : 'No bay selected'}
+              {selected
+                ? `Bay ${levelTag(selected.slotNumber, getSlotLevel(selected))}`
+                : 'No bay selected'}
             </h2>
             {selected ? (
               <dl className="receipt" style={{ marginBottom: 14 }}>
@@ -165,15 +256,23 @@ export default function Parking() {
                   <dt>Status</dt>
                   <dd>
                     <span
-                      className={`badge ${
-                        isCurrent
-                          ? 'badge-active'
-                          : selected.status === 'AVAILABLE'
-                            ? 'badge-available'
-                            : 'badge-occupied'
-                      }`}
+                      className={`badge ${(() => {
+                        if (isCurrent) return 'badge-active';
+                        switch (normalizeStatus(selected.status)) {
+                          case 'AVAILABLE':
+                            return 'badge-available';
+                          case 'RESERVED':
+                            return 'badge-reserved';
+                          case 'OUT_OF_SERVICE':
+                            return 'badge-muted';
+                          default:
+                            return 'badge-occupied';
+                        }
+                      })()}`}
                     >
-                      {isCurrent ? 'Your session' : selected.status}
+                      {isCurrent
+                        ? 'Your session'
+                        : normalizeStatus(selected.status).replace(/_/g, ' ')}
                     </span>
                   </dd>
                 </div>
@@ -200,14 +299,14 @@ export default function Parking() {
               </p>
             )}
 
-            <div className="slot-grid" role="group" aria-label="Parking bays">
-              {[...slots]
-                .sort((a, b) => a.slotNumber.localeCompare(b.slotNumber))
-                .map((s) => (
+            <div className="slot-grid" role="group" aria-label={`Parking bays on ${level}`}>
+              {levelSlots.map((s) => {
+                const st = normalizeStatus(s.status);
+                return (
                   <button
                     key={s.id}
                     type="button"
-                    disabled={s.status !== 'AVAILABLE'}
+                    disabled={st !== 'AVAILABLE'}
                     onClick={() => {
                       setSelectedId(s.id);
                       setNotice('');
@@ -215,7 +314,9 @@ export default function Parking() {
                     className={[
                       'slot-chip',
                       s.id === selectedId ? 'selected' : '',
-                      s.status === 'OCCUPIED' ? 'occupied' : '',
+                      st === 'OCCUPIED' ? 'occupied' : '',
+                      st === 'RESERVED' ? 'reserved' : '',
+                      st === 'OUT_OF_SERVICE' ? 'oos' : '',
                       session?.parkingSlot?.id === s.id ? 'current' : '',
                     ]
                       .filter(Boolean)
@@ -226,12 +327,13 @@ export default function Parking() {
                         : undefined
                     }
                     aria-pressed={s.id === selectedId}
-                    aria-label={`Bay ${s.slotNumber}, ${s.size}, ${s.status}`}
+                    aria-label={`Bay ${levelTag(s.slotNumber, level)}, ${s.size}, ${st}`}
                   >
-                    {s.slotNumber}
+                    {levelTag(s.slotNumber, level)}
                     <small>{s.size}</small>
                   </button>
-                ))}
+                );
+              })}
             </div>
           </div>
 
@@ -255,6 +357,33 @@ export default function Parking() {
               </>
             ) : (
               <>
+                <div className="checkin-bar">
+                  <div className="field">
+                    <label className="field-label" htmlFor="park-level">
+                      Preferred level
+                    </label>
+                    <select
+                      id="park-level"
+                      className="select"
+                      value={prefLevel}
+                      onChange={(e) => setPrefLevel(e.target.value)}
+                    >
+                      <option value="ANY">Any level</option>
+                      <option value="P1">P1</option>
+                      <option value="P2">P2</option>
+                      <option value="P3">P3</option>
+                    </select>
+                  </div>
+                  <div className="field" style={{ justifyContent: 'flex-end' }}>
+                    <Button
+                      variant="secondary"
+                      onClick={findParking}
+                      disabled={!chosenVehicle}
+                    >
+                      Find best bay
+                    </Button>
+                  </div>
+                </div>
                 <div className="field">
                   <label className="field-label" htmlFor="park-vehicle">
                     Vehicle
