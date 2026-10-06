@@ -11,15 +11,29 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY =
-            "SmartParkingProjectSecretKey2026VerySecureKey";
+    private final String secret;
+    private final long expirationMs;
 
-    private static final long EXPIRATION_TIME =
-            1000 * 60 * 60 * 24;
+    public JwtService(
+            @org.springframework.beans.factory.annotation.Value("${app.jwt.secret:}")
+            String secret,
+            @org.springframework.beans.factory.annotation.Value("${app.jwt.expiration-ms:86400000}")
+            long expirationMs) {
+        if (secret == null || secret.isBlank()) {
+            throw new IllegalStateException(
+                    "JWT secret is not configured. Set the JWT_SECRET environment variable.");
+        }
+        if (secret.getBytes(StandardCharsets.UTF_8).length < 32) {
+            throw new IllegalStateException(
+                    "JWT secret must be at least 32 bytes (256 bits) for HS256.");
+        }
+        this.secret = secret;
+        this.expirationMs = expirationMs;
+    }
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(
-                SECRET_KEY.getBytes(StandardCharsets.UTF_8)
+                secret.getBytes(StandardCharsets.UTF_8)
         );
     }
 
@@ -31,7 +45,7 @@ public class JwtService {
                 .expiration(
                         new Date(
                                 System.currentTimeMillis()
-                                        + EXPIRATION_TIME
+                                        + expirationMs
                         )
                 )
                 .signWith(getSigningKey())

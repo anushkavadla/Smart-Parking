@@ -1,13 +1,32 @@
-# Frontend
+# Frontend (real app lives in frontend/smartpark/)
 frontend/node_modules/
 frontend/dist/
+frontend/smartpark/node_modules/
+frontend/smartpark/dist/
+frontend/smartpark/.env.local
+frontend/smartpark/.env.*.local
 
 # Backend
 backend/target/
+backend/.env
+backend/.env.local
 
-# Environment files
+# Environment files (any level — never commit real secrets)
 .env
-*.env
+.env.local
+*.env.local
+!.env.example
+!*.env.example
+
+# Credentials / dumps / backups (never commit)
+*.pem
+*.key
+*.p12
+*.pfx
+*.sql
+*.dump
+*.bak
+*~
 
 # IDE
 .vscode/
