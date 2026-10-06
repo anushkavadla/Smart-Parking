@@ -93,7 +93,22 @@ public class SecurityConfig {
                                     MediaType.APPLICATION_JSON_VALUE);
                             response.getWriter().write(
                                     "{\"error\":\"Forbidden\"}");
-                        }));
+                        }))
+
+                // Security headers (API-safe; no HSTS — local HTTP only).
+                // CSP is deliberately minimal for JSON APIs and does not
+                // affect the React document (Vite/Three.js untouched).
+                .headers(headers -> headers
+                        .contentTypeOptions(contentType -> {
+                        })
+                        .frameOptions(frame -> frame.deny())
+                        .referrerPolicy(referrer -> referrer
+                                .policy(org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER))
+                        .permissionsPolicyHeader(permissions -> permissions
+                                .policy("geolocation=(), microphone=(), camera=(), payment=()"))
+                        .contentSecurityPolicy(csp -> csp
+                                .policyDirectives(
+                                        "default-src 'none'; frame-ancestors 'none'")));
 
         // JWT filter
         http.addFilterBefore(
