@@ -13,15 +13,21 @@ import com.example.parking.repository.ParkingLotRepository;
 public class ParkingLotService {
 
     private final ParkingLotRepository parkingLotRepository;
+    private final UserRoleService userRoleService;
 
     public ParkingLotService(
-            ParkingLotRepository parkingLotRepository) {
+            ParkingLotRepository parkingLotRepository,
+            UserRoleService userRoleService) {
 
         this.parkingLotRepository = parkingLotRepository;
+        this.userRoleService = userRoleService;
     }
 
     public ParkingLot createParkingLot(
-            ParkingLotRequest request) {
+            ParkingLotRequest request,
+            String email) {
+
+        userRoleService.requireAdmin(email);
 
         ParkingLot parkingLot = new ParkingLot();
 

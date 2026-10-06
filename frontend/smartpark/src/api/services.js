@@ -24,6 +24,9 @@ export const authService = {
 };
 
 export const userService = {
+  // Own profile (any authenticated user). Use this for Profile pages.
+  me: () => api.get('/api/users/me'),
+  // Admin-only user enumeration. Normal users get 403.
   list: () => api.get('/api/users'),
 };
 

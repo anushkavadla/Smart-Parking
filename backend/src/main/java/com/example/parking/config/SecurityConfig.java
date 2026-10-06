@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,13 +52,48 @@ public class SecurityConfig {
 
                         // Authentication APIs
                         .requestMatchers("/api/auth/**").permitAll()
-                        
+
                         // Error endpoint
                         .requestMatchers("/error").permitAll()
 
+                        // Self profile stays available to any signed-in user
+                        .requestMatchers(HttpMethod.GET, "/api/users/me")
+                        .authenticated()
+
+                        // Admin-only: user enumeration (service also enforces)
+                        .requestMatchers(HttpMethod.GET, "/api/users")
+                        .hasRole("ADMIN")
+
+                        // Admin-only writes (services also enforce)
+                        .requestMatchers(HttpMethod.POST, "/api/parking-lots")
+                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/parking-levels")
+                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/parking-slots/**")
+                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/parking-slots/**")
+                        .hasRole("ADMIN")
+
                         // Everything else requires JWT
                         .anyRequest().authenticated()
-                );
+                )
+
+                // Proper JSON 401/403 instead of default HTML pages
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authEx) -> {
+                            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                            response.setContentType(
+                                    MediaType.APPLICATION_JSON_VALUE);
+                            response.getWriter().write(
+                                    "{\"error\":\"Unauthorized\"}");
+                        })
+                        .accessDeniedHandler((request, response, accessEx) -> {
+                            response.setStatus(HttpStatus.FORBIDDEN.value());
+                            response.setContentType(
+                                    MediaType.APPLICATION_JSON_VALUE);
+                            response.getWriter().write(
+                                    "{\"error\":\"Forbidden\"}");
+                        }));
 
         // JWT filter
         http.addFilterBefore(

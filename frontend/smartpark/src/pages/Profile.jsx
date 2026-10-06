@@ -24,17 +24,13 @@ export default function Profile() {
     let cancelled = false;
     (async () => {
       try {
-        const [users, vehicles, sessions] = await Promise.all([
-          userService.list(),
+        const [mine, vehicles, sessions] = await Promise.all([
+          userService.me(),
           vehicleService.list(),
           parkingSessionService.history(),
         ]);
         if (cancelled) return;
-        const mine =
-          (users ?? []).find(
-            (u) => u.email === user?.email,
-          ) ?? { name: user?.name, email: user?.email };
-        setMe(mine);
+        setMe(mine ?? { name: user?.name, email: user?.email });
         setCounts({
           vehicles: (vehicles ?? []).length,
           sessions: (sessions ?? []).length,

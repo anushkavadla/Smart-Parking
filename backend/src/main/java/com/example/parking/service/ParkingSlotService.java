@@ -40,7 +40,10 @@ public class ParkingSlotService {
 
     public ParkingSlot createSlot(
             Long parkingLotId,
-            ParkingSlotRequest request) {
+            ParkingSlotRequest request,
+            String email) {
+
+        userRoleService.requireAdmin(email);
 
         ParkingLot parkingLot =
                 parkingLotRepository.findById(parkingLotId)
@@ -89,7 +92,9 @@ public class ParkingSlotService {
                         "AVAILABLE");
     }
 
-    public void generateSlots(Long parkingLotId) {
+    public void generateSlots(Long parkingLotId, String email) {
+
+        userRoleService.requireAdmin(email);
 
         ParkingLot parkingLot =
                 parkingLotRepository.findById(parkingLotId)

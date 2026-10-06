@@ -35,12 +35,14 @@ public class ParkingSlotController {
     @PostMapping("/{lotId}")
     public ResponseEntity<ParkingSlot> createSlot(
             @PathVariable Long lotId,
-            @Valid @RequestBody ParkingSlotRequest request) {
+            @Valid @RequestBody ParkingSlotRequest request,
+            Authentication authentication) {
 
         ParkingSlot slot =
                 parkingSlotService.createSlot(
                         lotId,
-                        request);
+                        request,
+                        authentication.getName());
 
         return ResponseEntity.ok(slot);
     }
@@ -69,9 +71,10 @@ public class ParkingSlotController {
 
     @PostMapping("/generate/{lotId}")
     public ResponseEntity<String> generateSlots(
-            @PathVariable Long lotId) {
+            @PathVariable Long lotId,
+            Authentication authentication) {
 
-        parkingSlotService.generateSlots(lotId);
+        parkingSlotService.generateSlots(lotId, authentication.getName());
 
         return ResponseEntity.ok(
                 "Parking slots generated successfully");

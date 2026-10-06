@@ -3,6 +3,7 @@ package com.example.parking.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,10 +30,12 @@ public class ParkingLotController {
 
     @PostMapping
     public ResponseEntity<ParkingLot> createParkingLot(
-            @Valid @RequestBody ParkingLotRequest request) {
+            @Valid @RequestBody ParkingLotRequest request,
+            Authentication authentication) {
 
         ParkingLot parkingLot =
-                parkingLotService.createParkingLot(request);
+                parkingLotService.createParkingLot(
+                        request, authentication.getName());
 
         return ResponseEntity.ok(parkingLot);
     }

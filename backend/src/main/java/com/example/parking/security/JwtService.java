@@ -38,9 +38,17 @@ public class JwtService {
     }
 
     public String generateToken(String email) {
+        return generateToken(email, "USER");
+    }
+
+    public String generateToken(String email, String role) {
+
+        String normalizedRole =
+                role == null ? "USER" : role.trim().toUpperCase();
 
         return Jwts.builder()
                 .subject(email)
+                .claim("role", normalizedRole)
                 .issuedAt(new Date())
                 .expiration(
                         new Date(
@@ -60,6 +68,33 @@ public class JwtService {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    // Role claim is informational only; authorization is resolved
+    // server-side from the database (see JwtAuthenticationFilter).
+    // Tokens issued before roles existed have no claim -> "USER".
+    public String extractRole(String token) {
+
+        try {
+            Object claim = Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .get("role");
+
+            if (claim == null) {
+                return "USER";
+            }
+
+            String role = claim.toString().trim().toUpperCase();
+
+            return ("ADMIN".equals(role) || "USER".equals(role))
+                    ? role
+                    : "USER";
+        } catch (Exception e) {
+            return "USER";
+        }
     }
 
     public boolean isTokenValid(String token) {
