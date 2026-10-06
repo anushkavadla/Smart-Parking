@@ -109,9 +109,12 @@ public class SecurityConfig {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOriginPatterns(List.of(
-                "http://localhost:*",
-                "http://127.0.0.1:*"
+        // Exact frontend origins only. Never "*" with credentials and
+        // never arbitrary localhost ports: http://localhost:5173 is the
+        // Vite dev server (see frontend/smartpark/vite.config.js).
+        config.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "http://127.0.0.1:5173"
         ));
 
         config.setAllowedMethods(List.of(
@@ -123,9 +126,17 @@ public class SecurityConfig {
                 "OPTIONS"
         ));
 
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of(
+                "Authorization",
+                "Content-Type",
+                "Accept",
+                "Origin",
+                "X-Requested-With"
+        ));
 
         config.setAllowCredentials(true);
+
+        config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
