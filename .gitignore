@@ -17,6 +17,8 @@ backend/.env.local
 *.env.local
 !.env.example
 !*.env.example
+**/.env
+
 
 # Credentials / dumps / backups (never commit)
 *.pem
