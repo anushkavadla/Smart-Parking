@@ -32,16 +32,33 @@ export function rateFor(vehicleType) {
   return RATE_FOR_TYPE[String(vehicleType ?? '').toUpperCase()] ?? 20;
 }
 
+export function parseParkingTime(value) {
+  if (!value) return NaN;
+
+  let str = String(value).trim().replace(' ', 'T');
+  // If the timestamp does not already include a timezone indicator ('Z' or [+-]HH[:MM]),
+  // treat it as UTC instant from the backend (standard for LocalDateTime in JSON).
+  if (!/(?:Z|[+-]\d{2}(?::?\d{2})?)$/i.test(str)) {
+    str += 'Z';
+  }
+  return new Date(str).getTime();
+}
 export function estimateFee(checkInIso, vehicleType, now = new Date()) {
-  const start = new Date(checkInIso).getTime();
+  const start = parseParkingTime(checkInIso);
+  if (!Number.isFinite(start)) {
+    return { hours: 1, fee: rateFor(vehicleType) };
+  }
+
   const mins = Math.max(0, (now.getTime() - start) / 60000);
   const hours = Math.max(1, Math.ceil(mins / 60));
+
   return { hours, fee: hours * rateFor(vehicleType) };
 }
 
 export function formatDateTime(iso) {
-  if (!iso) return '—';
-  return new Date(iso).toLocaleString(undefined, {
+  const t = parseParkingTime(iso);
+  if (!Number.isFinite(t)) return '—';
+  return new Date(t).toLocaleString(undefined, {
     day: '2-digit',
     month: 'short',
     hour: '2-digit',
@@ -50,9 +67,11 @@ export function formatDateTime(iso) {
 }
 
 export function formatDuration(checkInIso, checkOutIso) {
-  if (!checkInIso) return '—';
-  const end = checkOutIso ? new Date(checkOutIso) : new Date();
-  const mins = Math.max(0, Math.round((end - new Date(checkInIso)) / 60000));
+  const start = parseParkingTime(checkInIso);
+  if (!Number.isFinite(start)) return '—';
+  const end = checkOutIso ? parseParkingTime(checkOutIso) : Date.now();
+  if (!Number.isFinite(end)) return '—';
+  const mins = Math.max(0, Math.round((end - start) / 60000));
   const h = Math.floor(mins / 60);
   const m = mins % 60;
   if (h === 0) return `${m} min`;

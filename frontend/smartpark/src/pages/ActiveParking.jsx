@@ -16,6 +16,7 @@ import {
   formatDateTime,
   formatElapsed,
   inr,
+  parseParkingTime,
   rateFor,
 } from '../utils/parking';
 import {
@@ -34,9 +35,9 @@ export default function ActiveParking() {
   const [chosenId, setChosenId] = useState(null);
   const [slots, setSlots] = useState(null);
   const [error, setError] = useState('');
-  const [now, setNow] = useState(() => Date.now());
   const [level, setLevel] = useState(null);
   const [levels, setLevels] = useState([]);
+  const [now, setNow] = useState(() => Date.now());
 
   async function loadSlotsFor(active) {
     const lotId = active.parkingSlot?.parkingLot?.id ?? 1;
@@ -176,7 +177,7 @@ export default function ActiveParking() {
         <div className="card card-pad" style={{ textAlign: 'center' }}>
           <p className="eyebrow">Elapsed</p>
           <div className="timer-display" aria-live="off">
-            {formatElapsed(now - new Date(session.checkInTime).getTime())}
+            {formatElapsed(now - parseParkingTime(session.checkInTime))}
           </div>
           <dl className="receipt" style={{ marginTop: 20, textAlign: 'left' }}>
             <div className="receipt-row">

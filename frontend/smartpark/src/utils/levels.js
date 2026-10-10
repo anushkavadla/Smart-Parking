@@ -53,7 +53,7 @@ export function normalizeLevel(value) {
 /* "P1-M04" / "P2_M04" / "P3:M04" → "P1"/"P2"/"P3" | null. Prefixes are
  * real backend data (the seeder numbers bays this way), never invented. */
 export function levelFromSlotNumber(slotNumber) {
-  const m = String(slotNumber ?? '').match(/^P([123])[\-_\s:]?/i);
+  const m = String(slotNumber ?? '').match(/^P([123])[-_\s:]?/i);
   return m ? `P${m[1]}` : null;
 }
 

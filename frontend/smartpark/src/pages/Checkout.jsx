@@ -104,7 +104,7 @@ export default function Checkout() {
 
   function validateForm() {
     if (method === 'UPI') {
-      if (!/^[\w.\-]{2,}@[a-zA-Z]{2,}$/.test(upiId.trim())) {
+      if (!/^[\w.-]{2,}@[a-zA-Z]{2,}$/.test(upiId.trim())) {
         return 'Enter a valid UPI ID (e.g. driver@okbank).';
       }
     }
