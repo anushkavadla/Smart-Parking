@@ -131,6 +131,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Testing - H2 in-memory database for integration tests
+             (keeps tests independent of the local MySQL instance) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <!-- Build -->

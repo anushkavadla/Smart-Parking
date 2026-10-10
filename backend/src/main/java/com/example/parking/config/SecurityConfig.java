@@ -93,7 +93,8 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of(
             "http://localhost:5173",
             "http://127.0.0.1:5173",
-            "https://smart-parking-frontend-npfl.onrender.com"
+            "https://smart-parking-frontend-npfl.onrender.com",
+            "https://smart-parking-frontend-final.onrender.com"
         ));
 
         config.setAllowedMethods(List.of(
@@ -108,7 +109,11 @@ public class SecurityConfig {
             "X-Requested-With"
         ));
 
-        config.setAllowCredentials(true);
+        // Authentication is Bearer-token only (Authorization header,
+        // localStorage on the client); no cookies are ever used, so
+        // credentials are not required. Exact origins are allow-listed
+        // above — never combine allowCredentials with wildcard origins.
+        config.setAllowCredentials(false);
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =
